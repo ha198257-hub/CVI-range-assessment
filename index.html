@@ -1458,10 +1458,7 @@ function generatePDF(includeGuide){
   LEVELS.forEach(function(lv){
     if(lv.range[0]>lastQ) return;
     rows+='<tr><td colspan="4" style="background:'+lv.color+';color:#fff;font-weight:700;font-size:12px;padding:7px 12px">'
-      +'<div style="display:flex;align-items:center;justify-content:space-between">'
-      +'<span>평가척도 1 - '+lv.label+' : '+lv.desc+'</span>'
-      +'<span style="background:rgba(255,255,255,.25);padding:2px 10px;border-radius:20px;font-size:11px;white-space:nowrap;flex-shrink:0">Lv.'+S.finalLv+' / Lv.10</span>'
-      +'</div></td></tr>';
+      +'<span>평가척도 1 - '+lv.label+' : '+lv.desc+'</span></td></tr>';
     var e2=Math.min(lv.range[1],lastQ);
     for(var n=lv.range[0];n<=e2;n++){
       var a=S.ans[n-1];
@@ -1516,7 +1513,7 @@ function generatePDF(includeGuide){
   var sc2table='<div style="margin-top:14px;border-radius:0 0 8px 8px;overflow:hidden">'
     +'<div style="background:#7c5cbf;color:#fff;font-weight:700;font-size:12px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center">'
     +'<span>평가척도 2 — CVI 고유 특성 영향 평가</span>'
-    +'<span style="background:rgba(255,255,255,.25);padding:2px 10px;border-radius:20px;font-size:11px">총점: '+sc2total+'점 / 10점</span>'
+    
     +'</div>'
     +'<table style="width:100%;border-collapse:collapse">'+sc2rows+'</table>'
     +'</div>';
