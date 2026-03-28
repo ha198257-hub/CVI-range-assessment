@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-512.png">
+<link rel="icon" type="image/png" href="icon-512.png">
+<meta name="apple-mobile-web-app-title" content="CVI Range">
+<meta name="theme-color" content="#1a4a6b">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1a4a6b">
+<title>CVI Range 평가척도</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f0f4f8;--card:#ffffff;--primary:#1a4a6b;--pl:#2d6a9f;
+  --accent:#e8a838;--text:#1a2332;--muted:#64748b;--border:#e2e8f0;
+  --shadow:0 4px 24px rgba(26,74,107,.10);--r:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text)}
+.screen{display:none;min-height:100vh;flex-direction:column}
+/* cover scrollable */
+#sc-cover .ci{min-height:100vh}
+.screen.active{display:flex}
+
+/* COVER */
+#sc-cover::before{
+  content:'';position:absolute;top:-100px;right:-80px;
+  width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(61,184,160,.2) 0%,transparent 65%);
+  pointer-events:none;
+}
+#sc-cover::after{
+  content:'';position:absolute;bottom:-80px;left:-60px;
+  width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,rgba(232,168,56,.12) 0%,transparent 65%);
+  pointer-events:none;
+}
+#sc-cover{
+  background:linear-gradient(160deg,#0b2540 0%,#1a4a6b 45%,#1e7a6e 100%);
+  align-items:center;justify-content:center;
+  padding:48px 28px;position:relative;overflow:hidden;
+}
+
+
+.ci{max-width:360px;width:100%;z-index:1;text-align:center;}
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  color:rgba(255,255,255,.45);font-size:11px;font-weight:500;
+  letter-spacing:1.5px;padding:6px 16px;border-radius:20px;margin-bottom:24px;
+}
+.cover-t{
+  font-family:'Playfair Display',serif;font-size:52px;font-weight:800;
+  font-style:italic;color:#fff;line-height:1;margin-bottom:4px;letter-spacing:-2px;
+}
+.cover-sub{
+  font-size:12px;font-weight:700;letter-spacing:4px;
+  color:rgba(232,168,56,.85);text-transform:uppercase;margin-bottom:28px;
+}
+.cover-rule{width:80px;height:2px;background:rgba(232,168,56,.8);margin:0 auto 28px;border-radius:2px;}
+
+.fg{margin-bottom:14px;text-align:left;}
+.fl{font-size:11px;font-weight:700;color:rgba(255,255,255,.55);letter-spacing:1px;margin-bottom:6px;display:block;text-transform:uppercase;}
+.fi{
+  width:100%;padding:13px 16px;border-radius:10px;
+  background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.18);
+  color:#fff;font-family:'Noto Sans KR',sans-serif;font-size:15px;outline:none;
+  transition:all .15s;
+}
+.fi::placeholder{color:rgba(255,255,255,.3);}
+input[type="date"].fi{
+  -webkit-appearance:none;appearance:none;
+  color:#fff;width:100%;
+  display:block;box-sizing:border-box;
+}
+input[type="date"].fi::-webkit-date-and-time-value{text-align:left;}
+input[type="date"].fi::-webkit-calendar-picker-indicator{
+  filter:invert(1);opacity:.5;cursor:pointer;margin-left:auto;
+}
+.fi:focus{background:rgba(255,255,255,.15);border-color:rgba(232,168,56,.6);}
+input[type="date"].fi::-webkit-calendar-picker-indicator{filter:invert(1);opacity:.5;}
+
+.ev-g{display:flex;gap:8px;}
+.ev-b{
+  flex:1;padding:12px 6px;border-radius:10px;text-align:center;
+  background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.7);font-family:'Noto Sans KR',sans-serif;
+  font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;
+}
+.ev-b.on{background:rgba(61,184,160,.25);border-color:rgba(61,184,160,.7);color:#fff;}
+
+.btn-s{
+  width:100%;padding:16px;border-radius:12px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#3db8a0,#2d9e8a);
+  color:#fff;font-family:'Noto Sans KR',sans-serif;
+  font-size:15px;font-weight:700;margin-top:10px;
+  box-shadow:0 6px 20px rgba(61,184,160,.35);letter-spacing:.3px;
+}
+.btn-guest{width:100%;padding:10px;border-radius:10px;border:none;cursor:pointer;background:transparent;color:rgba(255,255,255,.7);font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:500;margin-top:6px;text-decoration:underline;text-underline-offset:3px}
+
+/* HEADER */
+/* HEADER */
+/* HEADER */
+.hdr{background:var(--primary);color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.hdr-t{font-size:15px;font-weight:700}
+.hdr-c{font-size:12px;color:rgba(255,255,255,.7)}
+.prog-w{background:rgba(255,255,255,.2);height:4px}
+.prog-b{height:4px;background:var(--accent);transition:width .4s ease}
+.lv-banner{margin:10px 14px 0;border-radius:10px;padding:8px 12px;font-size:11px;font-weight:600;display:flex;flex-direction:column;align-items:flex-start;gap:2px;border-left:4px solid}
+.lv-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* QUESTION */
+.qa{padding:10px 14px;flex:1;overflow-y:auto}
+.qc{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:14px 16px;margin-bottom:8px}
+.qn{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:1px;margin-bottom:10px}
+.qt{font-size:17px;font-weight:500;line-height:1.5}
+.st{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--muted);margin-bottom:7px}
+.chip-row{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:7px 12px;border-radius:100px;font-size:13px;font-weight:600;border:2px solid var(--border);background:var(--bg);color:var(--muted);cursor:pointer;transition:all .15s}
+.chip.cO{border-color:#2d6a9f;background:#e8f4fd;color:#2d6a9f}
+.chip.cI{border-color:#3db8a0;background:#edf7f5;color:#27856f}
+.chip.cD{border-color:#e8a838;background:#fef9ec;color:#b07d1a}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rb{padding:9px 6px;border-radius:10px;border:2px solid var(--border);background:var(--bg);color:var(--muted);cursor:pointer;text-align:center;transition:all .15s;line-height:1.3;display:flex;align-items:center;gap:8px;justify-content:center}
+.rb .sy{font-size:16px;font-weight:700;flex-shrink:0}
+.rb.cR{border-color:#6366f1;background:#eef2ff;color:#4f46e5}
+.rb.cP{border-color:#3db8a0;background:#edf7f5;color:#27856f}
+.rb.cPM{border-color:#e8a838;background:#fef9ec;color:#b07d1a}
+.rb.cM{border-color:#ef4444;background:#fef2f2;color:#dc2626}
+.nav{padding:10px 14px 20px;display:flex;gap:10px;background:var(--card);border-top:1px solid var(--border);position:sticky;bottom:0}
+.btn-bk{flex:0 0 46px;height:46px;border-radius:10px;border:2px solid var(--border);background:var(--bg);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
+.btn-nx{flex:1;height:46px;border-radius:10px;border:none;background:var(--primary);color:#fff;cursor:pointer;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700}
+.btn-nx:disabled{background:#b0c4d8;cursor:not-allowed}
+
+/* RESULT */
+.rh{background:linear-gradient(160deg,#0a1f35 0%,#1a4a6b 55%,#1e6090 100%);padding:48px 24px 36px;color:#fff;text-align:center;position:relative;overflow:hidden}
+.rh::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(232,168,56,.08);pointer-events:none}
+.rh::after{content:'';position:absolute;bottom:-60px;left:-30px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
+.rh-label{font-family:'Playfair Display',serif;font-size:11px;letter-spacing:4px;color:rgba(232,168,56,.9);font-weight:700;margin-bottom:14px;text-transform:uppercase}
+.rh-title{font-family:'Playfair Display',serif;font-size:42px;font-weight:800;font-style:italic;color:#fff;line-height:1.1;margin-bottom:0;letter-spacing:-1px;text-shadow:0 2px 20px rgba(0,0,0,.3)}
+.rh-divider{width:48px;height:2px;background:var(--accent);margin:16px auto 14px;border-radius:2px}
+.rh-sub{font-family:'Noto Sans KR',sans-serif;font-size:13px;color:rgba(255,255,255,.65);letter-spacing:.5px}
+.rb2{padding:16px;flex:1;overflow-y:auto}
+.rm{background:var(--card);border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow);margin-bottom:14px}
+.mr{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)}
+.mr:last-child{border-bottom:none}
+.ml{font-size:12px;color:var(--muted);font-weight:600}
+.mv{font-size:13px;font-weight:600}
+.rs{margin-bottom:14px}
+.rsh{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:13px;font-weight:700}
+.rsd{width:10px;height:10px;border-radius:50%}
+.rrow{background:var(--card);border-radius:10px;padding:11px 14px;margin-bottom:5px;display:flex;align-items:flex-start;gap:10px;box-shadow:0 1px 6px rgba(26,74,107,.07)}
+.rn{font-size:11px;font-weight:700;color:var(--muted);min-width:22px;padding-top:2px}
+.comment-ta{width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-family:'Noto Sans KR',sans-serif;font-size:13px;color:var(--text);outline:none;resize:none;line-height:1.6;transition:border-color .15s}
+.comment-ta:focus{border-color:var(--primary);background:#fff}
+.rq{font-size:13px;line-height:1.5;flex:1}
+.roi{font-size:11px;color:var(--muted);margin-top:2px}
+.rbadge{font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px;white-space:nowrap;border:1px solid}
+.ract{padding:14px;display:flex;flex-direction:column;gap:10px}
+.btn-pdf{width:100%;padding:16px;border-radius:12px;border:none;cursor:pointer;background:linear-gradient(135deg,#3d7a6e,#3db8a0);color:#fff;text-align:center;font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-sh{width:100%;padding:16px;border-radius:12px;border:2px solid var(--primary);background:transparent;color:var(--primary);font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:700;cursor:pointer;text-align:center}
+.btn-rs{width:100%;padding:14px;border-radius:12px;border:none;background:var(--bg);color:var(--muted);font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:600;cursor:pointer;text-align:center}
+
+/* MODAL */
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;align-items:center;justify-content:center;padding:24px}
+.mo.show{display:flex}
+.mb{background:#fff;border-radius:20px;padding:28px 24px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.25);max-height:88vh;overflow-y:auto}
+.mi{text-align:center;font-size:40px;margin-bottom:12px}
+.mt{font-size:18px;font-weight:700;text-align:center;margin-bottom:8px}
+.md{font-size:14px;color:var(--muted);line-height:1.65;text-align:center;margin-bottom:20px}
+.mbtns{display:flex;gap:10px}
+.mbc{flex:1;padding:14px;border-radius:10px;border:2px solid var(--border);background:#f8fafc;color:var(--muted);font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:600;cursor:pointer}
+.mbo{flex:1;padding:14px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--primary),var(--pl));color:#fff;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+.lvo{padding:14px 16px;border-radius:12px;border:2px solid var(--border);background:#fff;cursor:pointer;transition:all .15s;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.lvc{width:20px;height:20px;border-radius:50%;border:2px solid #ccc;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;color:#fff}
+.btn-cl{width:100%;padding:15px;border-radius:12px;border:none;background:#b0c4d8;color:#fff;font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:700;margin-top:4px;cursor:not-allowed}
+.btn-cl.ok{background:linear-gradient(135deg,var(--primary),var(--pl));cursor:pointer}
+
+/* MISC */
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a2332;color:#fff;padding:12px 22px;border-radius:100px;font-size:13px;font-weight:600;z-index:9999;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.lov{display:none;position:fixed;inset:0;background:rgba(26,74,107,.65);align-items:center;justify-content:center;z-index:9999}
+.lov.show{display:flex}
+.sp{width:48px;height:48px;border:4px solid rgba(255,255,255,.2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.fu{animation:fu .3s ease}
+
+@media print {
+  body > *:not(#print-area) { display:none !important; }
+  #print-area { display:block !important; position:static !important; }
+}
+#print-area { display:none; }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+<!-- COVER -->
+<div id="sc-cover" class="screen active">
+  <div class="ci">
+    <div class="badge">피질 시각 장애 평가</div>
+    <div class="cover-t">CVI Range</div>
+    <div class="cover-sub" style="letter-spacing:5px;font-size:12px;font-weight:600;color:rgba(255,255,255,.7)">Assessment</div>
+    <div class="cover-rule"></div>
+    <div style="border-top:1px solid rgba(255,255,255,.15);padding-top:16px;margin-bottom:20px;">
+      <p style="font-size:11px;color:rgba(255,255,255,.45);line-height:1.8;letter-spacing:.3px;">이 평가도구는 Christine Roman Rantzy의<br><em style="color:rgba(232,168,56,.7);font-style:normal;font-weight:600;">CVI Range</em>를 App으로 만든 것입니다.</p>
+      <p style="font-size:11px;color:rgba(255,255,255,.65);margin-top:8px;letter-spacing:.8px;font-weight:600;">— 국립재활원 소아재활연구회 —</p>
+    </div>
+    <div class="fg">
+      <label class="fl">아동 이름</label>
+      <input type="text" id="inp-child" class="fi" placeholder="이름을 입력하세요">
+    </div>
+    <div class="fg">
+      <label class="fl">평가일</label>
+      <input type="date" id="inp-date" class="fi">
+    </div>
+    <div class="fg">
+      <label class="fl">평가자</label>
+      <div class="ev-g">
+        <div class="ev-b" id="ev0">👨‍👩‍👧 부모님</div>
+        <div class="ev-b" id="ev1">🩺 의사</div>
+        <div class="ev-b" id="ev2">🧑‍⚕️ 치료사</div>
+      </div>
+    </div>
+    <button class="btn-s" id="btn-start">평가 시작하기 →</button>
+    <button class="btn-guest" id="btn-guest">게스트로 입장</button>
+  </div>
+</div>
+
+<!-- QUESTION -->
+<div id="sc-q" class="screen">
+  <div class="hdr">
+    <div><div class="hdr-t">CVI Range 평가</div><div class="hdr-c" id="h-cnt"></div></div>
+    <div style="font-size:12px;color:rgba(255,255,255,.6)" id="h-pct"></div>
+  </div>
+  <div class="prog-w"><div class="prog-b" id="prog"></div></div>
+  <div class="lv-banner" id="lv-banner"></div>
+  <div class="qa" id="qa"></div>
+  <div class="nav">
+    <button class="btn-bk" id="btn-bk">←</button>
+    <button class="btn-nx" id="btn-nx" disabled>다음 문항</button>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="sc-result" class="screen">
+  <div class="rh">
+    <div class="rh-label">ASSESSMENT COMPLETE</div>
+    <h2 class="rh-title">평가 완료</h2>
+    <div class="rh-divider"></div>
+    <p id="r-sub" class="rh-sub"></p>
+  </div>
+  <div class="rb2"><div class="rm" id="r-meta"></div><div id="r-chart" style="margin-bottom:14px"></div>
+    <div id="r-list"></div>
+    <div id="r-sc2" style="margin-top:14px"></div></div>
+  <div class="ract">
+    <button class="btn-pdf" id="btn-pdf-basic" style="width:100%">📸 캡처 저장</button>
+    <button class="btn-sh" id="btn-sh">이메일 · 공유하기</button>
+    <div style="position:relative">
+      <button id="btn-back" style="position:absolute;left:0;top:0;bottom:0;width:48px;border-radius:12px 0 0 12px;border:none;background:rgba(0,0,0,.08);color:var(--muted);font-size:15px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif">←</button>
+      <button class="btn-rs" id="btn-rs" style="width:100%;text-align:center;padding-left:48px;padding-right:48px">처음으로 돌아가기</button>
+      <button id="btn-pdf" style="position:absolute;right:0;top:0;bottom:0;width:48px;border-radius:0 12px 12px 0;border:none;cursor:pointer;background:rgba(0,0,0,.15);color:var(--muted);font-size:18px">🔑</button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- LEVEL RESULT POPUP -->
+<div class="mo" id="mo-lv-result">
+  <div class="mb" style="text-align:center">
+    <div class="mi">🎯</div>
+    <div class="mt">평가척도 1 평가완료</div>
+    <div id="lv-result-body" style="margin-bottom:20px"></div>
+    <button class="mbo" id="btn-see-result" style="width:100%;padding:16px;font-size:15px;background:#1e7a6e">다음 평가 진행하기</button>
+  </div>
+</div>
+
+<!-- SCALE 2 SCREEN -->
+<div id="sc-scale2" class="screen">
+  <div class="hdr">
+    <div>
+      <div class="hdr-t">평가척도 2</div>
+      <div class="hdr-c">CVI 고유 특성 영향 평가</div>
+    </div>
+    <div style="font-size:11px;color:rgba(255,255,255,.6)">10개 항목</div>
+  </div>
+  <div style="padding:14px;flex:1;overflow-y:auto">
+    <div style="background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:12px;box-shadow:0 2px 12px rgba(26,74,107,.08)">
+      <div style="font-size:11px;font-weight:700;color:#64748b;letter-spacing:1px;margin-bottom:6px">평정 점수 기준</div><div style="font-size:11px;color:#94a3b8;margin-bottom:10px">(각 항목의 ⓘ 점수기준보기를 눌러 항목별 세부 기준을 확인하세요)</div>
+      <div style="font-size:12px;color:#475569;line-height:1.8">
+        <div><span style="font-weight:800;color:#dc2626">0</span> — CVI 특성이 완전하게 영향을 미침</div>
+        <div><span style="font-weight:800;color:#e8a838">.25</span> — 시각적 행동이 변화·개선되기 시작</div>
+        <div><span style="font-weight:800;color:#e8a838">.5</span> — 영향을 미치는 시간이 약 50%</div>
+        <div><span style="font-weight:800;color:#3db8a0">.75</span> — 때때로 영향을 미침</div>
+        <div><span style="font-weight:800;color:#2d6a9f">1</span> — 해결되었거나 또래 수준</div>
+      </div>
+    </div>
+    <div id="sc2-items"></div>
+  </div>
+  <div class="nav">
+    <button class="btn-bk" id="btn-sc2-back">←</button>
+    <button class="btn-nx" id="btn-sc2-done" style="background:#1a4a6b">결과 확인</button>
+  </div>
+</div>
+
+<!-- SC2 INFO MODAL -->
+<div class="mo" id="mo-sc2-info">
+  <div class="mb" style="max-height:80vh;overflow-y:auto;text-align:left">
+    <div style="font-size:15px;font-weight:800;color:#1a2332;margin-bottom:14px" id="sc2-info-title"></div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px" id="sc2-info-table"></table>
+    <button class="mbo" onclick="document.getElementById('mo-sc2-info').classList.remove('show')" style="width:100%;margin-top:16px;padding:14px">닫기</button>
+  </div>
+</div>
+
+<!-- PASSWORD MODAL -->
+<div class="mo" id="mo-pw">
+  <div class="mb" style="text-align:center">
+    <div class="mi">🔒</div>
+    <div class="mt">개발자 전용</div>
+    <div class="md">비밀번호를 입력하세요</div>
+    <input type="password" id="pw-input" style="width:100%;padding:13px 16px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:18px;text-align:center;outline:none;letter-spacing:4px;font-family:inherit;margin-bottom:14px" placeholder="••••">
+    <div class="mbtns">
+      <button class="mbc" id="btn-pw-cancel">취소</button>
+      <button class="mbo" id="btn-pw-ok">확인</button>
+    </div>
+  </div>
+</div>
+
+<div class="lov" id="loading"><div class="sp"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function() {
+
+// ── DATA ─────────────────────────────────────────────────────────
+var LEVELS = [
+  {range:[1,9],   lv:'1~2',  label:'CVI Range 1~2 레벨', desc:'최소한의 시각적 반응으로 시기능을 사용한다',                              color:'#2d6a9f',bg:'#e8f4fd'},
+  {range:[10,18], lv:'3~4',  label:'CVI Range 3~4 레벨', desc:'더욱 일관된 시각적 반응을 보인다',                                        color:'#3db8a0',bg:'#edf7f5'},
+  {range:[19,27], lv:'5~6',  label:'CVI Range 5~6 레벨', desc:'기능적 과제를 수행하는 데 시각을 사용한다',                               color:'#e8a838',bg:'#fef9ec'},
+  {range:[28,37], lv:'7~8',  label:'CVI Range 7~8 레벨', desc:'시각적 호기심을 보인다',                                                  color:'#7c5cbf',bg:'#f0ebff'},
+  {range:[38,49], lv:'9~10', label:'CVI Range 9~10 레벨',desc:'또래에 근접하고 정상에 가깝게 대부분의 기능적 활동에 시각을 사용한다',     color:'#e05a7a',bg:'#fde8ef'},
+];
+
+var QS = [
+  '물체 또는 사람 얼굴의 위치를 찾을 수 있으나, 제대로 고시하지 못한다.',
+  '광원(빛) 또는 선풍기를 지속적으로 바라본다.',
+  '시각 과제의 수행에서 장시간의 시각적 반응의 지연을 보인다.',
+  '엄격히 통제된 환경에서만 시각적으로 반응한다.',
+  '1가지 색상으로 된 물체만 바라본다.',
+  '움직이거나, 빛이 나오거나, 반짝이는 속성의 물체만 바라본다.',
+  '근거리에 있는 대상에만 시각적으로 주의를 기울인다.',
+  '안면 접촉이나 시각적 위협에 눈을 깜박이지 않는다.',
+  '사람들의 얼굴을 바라보지(응시하지) 않는다.',
+  '환경이 통제될 때만 시각적으로 고시한다.',
+  '빛에 관심을 덜 보이며 빛으로부터 다른 곳으로 시선을 돌릴 수 있다.',
+  '일정 시간 응시한 후, 시각적 반응 지연 시간이 약간 감소한다.',
+  '친숙한 물체와 유사한 특성을 가진 새로운 물체를 비교할 수 있다.',
+  '안면 접촉이나 시각적 위협에 눈을 깜박이지만, 눈 깜박임이 지연되어 일어나거나 일관되게 나타나지 않는다.',
+  '특정 색상을 선호한다.',
+  '특정 시야 영역(방향)을 강하게 선호한다.',
+  '60~90cm 거리에서 움직이는 물체에 주목한다.',
+  '물체를 바라보고 손을 뻗어 접촉하는 행동들이 동시에 이루어지는 것이 아니라 별개로(순차적으로) 이루어진다.',
+  '2~3가지 색상으로 된 물체도 바라볼 수 있다.',
+  '빛은 더 이상 시각적 주의를 방해하지 않는다.',
+  '피곤하거나, 스트레스를 받거나, 과도한 자극을 받는 경우에만 시각적 반응 지연이 일어난다.',
+  '움직임은 시각적 주의를 유도하는 중요한 요소로 계속하여 작용한다.',
+  '작은 배경 소음을 견디며 시각적 주의를 한다(작은 소음이 시각적 주의를 방해하지 않는다).',
+  '안면 접촉에 눈 깜박임이 일관되게 나타난다.',
+  '시각적 위협에 눈 깜박임이 간헐적으로 나타난다.',
+  '120~180cm(중간거리)에서도 시각적 주의를 할 수 있다.',
+  '말소리와 경쟁하지 않을 때 친숙한 사람의 얼굴을 바라볼 수 있다.',
+  '장난감이나 물체의 선정에 제한이 적으며, 이들에 대한 1~2회 정도의 워밍업만 필요할 수 있다.',
+  '청각 자극을 견디며 무언가를 바라볼 수 있다.',
+  '시각적 위협에 일관되게 눈 깜박임이 나타난다.',
+  '시각적 반응 지연이 거의 없다(드물게 일어난다).',
+  '3m 거리까지, 움직이는 대상(물체)에 시각적 주의를 한다.',
+  '대상이 근거리에 있는 경우, 시각적 주의를 유도하기 위해 대상 없이도 시각적으로 반응할 수 있다.',
+  '친숙한 사람의 얼굴을 다양한 환경에서 인식할 수 있다.',
+  '2개 이상의 물체가 있는 배경에서 원하는 물체를 찾을 수 있다.',
+  '물체를 바라보면서 동시에 손을 뻗어 잡을 수 있다.',
+  '말소리가 동반된 상황에서도 얼굴이나 물체를 바라볼 수 있다.',
+  '복잡한 배경에서도 원하는 물체를 찾아 시각적으로 주의를 기울일 수 있다.',
+  '움직임 없이도 정지된 물체에 지속적으로 시각적 주의를 기울인다.',
+  '친숙하지 않은 사람의 얼굴도 인식할 수 있다.',
+  '사진이나 그림을 인식할 수 있다.',
+  '책이나 화면의 이미지에 시각적 주의를 기울인다.',
+  '멀리 있는(3m 이상) 물체에도 시각적 주의를 기울일 수 있다.',
+  '시각적으로 안내를 받아 보행 또는 이동이 가능하다.',
+  '물체의 세부적인 특징을 시각적으로 구별할 수 있다.',
+  '동시에 여러 물체를 시각적으로 처리할 수 있다.',
+  '빠르게 움직이는 물체를 시각적으로 추적할 수 있다.',
+  '시각적 정보를 기억하여 재인식이 가능하다.',
+  '일상적인 시각 활동(읽기, 그리기 등)에 시각을 기능적으로 사용한다.',
+];
+
+var OIDS = [
+  {key:'O',label:'O',desc:'관찰',   cls:'cO'},
+  {key:'I',label:'I',desc:'면담',   cls:'cI'},
+  {key:'D',label:'D',desc:'직접평가',cls:'cD'},
+];
+var RATS = [
+  {key:'R',  sym:'R',  desc:'문제 없음',cls:'cR', color:'#4f46e5',bg:'#eef2ff',br:'#6366f1'},
+  {key:'+',  sym:'+',  desc:'그렇다',   cls:'cP', color:'#27856f',bg:'#edf7f5',br:'#3db8a0'},
+  {key:'+/-',sym:'+/−',desc:'가끔',     cls:'cPM',color:'#b07d1a',bg:'#fef9ec',br:'#e8a838'},
+  {key:'-',  sym:'−',  desc:'경험없음',cls:'cM', color:'#dc2626',bg:'#fef2f2',br:'#ef4444'},
+];
+
+// ── SCALE 2 DATA ──────────────────────────────────────────────────
+var SC2_ITEMS = [
+  '1. 특정 색상 선호',
+  '2. 움직임에 대한 요구(끌림)',
+  '3. 시각적(반응) 지연',
+  '4. 특정 시야 선호',
+  '5. 시각적 복잡성의 어려움',
+  '6. 빛에 대한 요구(끌림)',
+  '7. 원거리 보기의 어려움',
+  '8. 비전형적인 시각 반사',
+  '9. 시각적 새로움의 어려움',
+  '10. 시각적으로 안내된 신체 도달의 어려움',
+];
+var SC2_SCORES = [0, .25, .5, .75, 1];
+var SC2_COLORS = ['#dc2626','#f97316','#eab308','#3db8a0','#2d6a9f'];
+var SC2_LABELS = ['0','0.25','0.5','0.75','1'];
+var SC2_DESCS = ['CVI 특성이 완전하게 영향을 미침','시각적 행동이 변화·개선되기 시작','영향을 미치는 시간이 약 50%','때때로 영향을 미침','해결되었거나 또래 수준'];
+
+// ── STATE ────────────────────────────────────────────────────────
+var S = {
+  name:'', date:'', ev:'',
+  cur:0,
+  ans: newAns(),
+  stopped:null,
+  finalLv:null,
+};
+
+function newAns() {
+  return Array.from({length:49},function(){return{oid:[],rat:null,comment:''};});
+}
+function getLv(n) {
+  return LEVELS.find(function(l){return n>=l.range[0]&&n<=l.range[1];});
+}
+
+// ── HELPERS ──────────────────────────────────────────────────────
+function toast(msg) {
+  var t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},2400);
+}
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ── COVER ────────────────────────────────────────────────────────
+document.getElementById('inp-date').value = new Date().toISOString().split('T')[0];
+
+var EV_IDS = ['ev0','ev1','ev2'];
+var EV_VALS = ['부모님','의사','치료사'];
+EV_IDS.forEach(function(id,i) {
+  document.getElementById(id).addEventListener('click',function() {
+    S.ev = EV_VALS[i];
+    EV_IDS.forEach(function(eid,j){
+      document.getElementById(eid).className='ev-b'+(j===i?' on':'');
+    });
+  });
+});
+
+document.getElementById('btn-start').addEventListener('click',function() {
+  var c=document.getElementById('inp-child').value.trim();
+  var d=document.getElementById('inp-date').value;
+  if(!c){toast('아동 이름을 입력해주세요');return;}
+  if(!d){toast('평가일을 선택해주세요');return;}
+  if(!S.ev){toast('평가자를 선택해주세요');return;}
+  S.name=c; S.date=d; S.cur=0; S.stopped=null; S.finalLv=null; S.ans=newAns(); S.sc2ans=Array(10).fill(null);
+  renderQ(); showScreen('sc-q');
+});
+
+document.getElementById('btn-guest').addEventListener('click',function(){
+  S.name='게스트'; S.date=new Date().toISOString().split('T')[0];
+  S.ev='미지정'; S.cur=0; S.stopped=null; S.finalLv=null; S.ans=newAns(); S.sc2ans=Array(10).fill(null);
+  renderQ(); showScreen('sc-q');
+});
+
+// ── RENDER QUESTION ──────────────────────────────────────────────
+function renderQ() {
+  var i=S.cur, n=i+1, a=S.ans[i], lv=getLv(n), total=QS.length;
+  var pct=Math.round(i/total*100);
+
+  document.getElementById('h-cnt').textContent='문항 '+n+' / '+total;
+  document.getElementById('h-pct').textContent=pct+'%';
+  document.getElementById('prog').style.width=pct+'%';
+
+  var lb=document.getElementById('lv-banner');
+  lb.style.background=lv.bg; lb.style.borderColor=lv.color;
+  lb.innerHTML=
+    '<div style="display:flex;align-items:center;gap:6px">'+
+      '<div class="lv-dot" style="background:'+lv.color+'"></div>'+
+      '<span style="color:'+lv.color+';font-size:12px;font-weight:800">'+lv.label+'</span>'+
+    '</div>'+
+    '<div style="color:'+lv.color+';opacity:.75;font-size:10px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-left:14px">'+lv.desc+'</div>';
+
+  var oidH=OIDS.map(function(o){
+    var on=a.oid.indexOf(o.key)>=0;
+    return '<div class="chip'+(on?' '+o.cls:'')+'" data-oid="'+o.key+'">'+
+      o.label+' <span style="font-size:11px;font-weight:400;opacity:.75">'+o.desc+'</span></div>';
+  }).join('');
+
+  var ratH=RATS.map(function(r){
+    var on=a.rat===r.key;
+    var _sk={R:'R'}; _sk['+']='P'; _sk['+/−']='PM'; _sk['−']='M'; var symKey=_sk[r.sym]||null;
+    var rg = Q_RATING_GUIDE[n] && Q_RATING_GUIDE[n][symKey];
+    return '<div class="rb'+(on?' '+r.cls:'')+'" data-rat="'+r.key+'">'+
+      '<span class="sy">'+r.sym+'</span>'+r.desc+'</div>';
+  }).join('');
+
+  var qa=document.getElementById('qa');
+  qa.innerHTML=
+    '<div class="qc fu"><div class="qn">문항 '+n+'</div><div class="qt">'+QS[i]+'</div></div>'+
+    '<div class="qc fu" style="animation-delay:.05s">'+
+      '<div class="st">정보수집방법 (복수선택 가능)</div>'+
+      '<div class="chip-row">'+oidH+'</div></div>'+
+    '<div class="qc fu" style="animation-delay:.1s">'+
+      '<div class="st">평정기호 선택</div>'+
+      '<div style="font-size:11px;color:#94a3b8;margin-bottom:8px">(ⓘ 점수기준보기를 눌러 각 항목의 세부 기준을 확인하세요)</div>'+
+      '<div class="rg">'+ratH+'</div>'+
+      (Q_RATING_GUIDE[n] ? '<div style="text-align:right;margin-top:8px"><button onclick="showAllRating('+n+')" style="padding:5px 12px;border-radius:20px;border:none;background:rgba(61,184,160,.12);color:#3db8a0;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">ⓘ 점수기준보기</button></div>' : '')+
+      '</div>'+
+    '<div class="qc fu" style="animation-delay:.15s">'+
+      '<div class="st">코멘트 (선택)</div>'+
+      '<textarea class="comment-ta" id="comment-ta" rows="2" placeholder="코멘트 (선택사항)" style="min-height:52px">'+a.comment+'</textarea></div>'
+    +(Q_GUIDE[i] ? (function(){
+      var steps = Q_GUIDE[i].map(function(step,si){
+        return '<div style="display:flex;gap:8px;padding:5px 0;border-bottom:1px solid #f1f5f9">'
+          +'<span style="color:#3db8a0;font-weight:800;font-size:11px;flex-shrink:0;min-width:14px;padding-top:1px">'+(si+1)+'</span>'
+          +'<span style="font-size:12px;color:#475569;line-height:1.7">'+step+'</span>'
+          +'</div>';
+      }).join('');
+      return '<div class="qc fu" style="animation-delay:.2s">'
+        +'<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">'
+        +'<span style="width:16px;height:16px;border-radius:50%;background:#3db8a0;color:#fff;font-size:10px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0">i</span>'
+        +'<div class="st" style="margin-bottom:0">검사 지침</div>'
+        +'</div>'
+        +steps
+        +'</div>';
+    }()) : '')
+
+  qa.querySelectorAll('[data-oid]').forEach(function(el){
+    el.addEventListener('click',function(){
+      var k=el.getAttribute('data-oid');
+      var idx=a.oid.indexOf(k);
+      if(idx>=0) a.oid.splice(idx,1); else a.oid.push(k);
+      var o=OIDS.find(function(x){return x.key===k;});
+      el.className='chip'+(a.oid.indexOf(k)>=0?' '+o.cls:'');
+      updBtn();
+    });
+  });
+
+  qa.querySelectorAll('[data-rat]').forEach(function(el){
+    el.addEventListener('click',function(){
+      var k=el.getAttribute('data-rat');
+      a.rat=k;
+      qa.querySelectorAll('[data-rat]').forEach(function(rb){
+        var rk=rb.getAttribute('data-rat');
+        var r2=RATS.find(function(x){return x.key===rk;});
+        rb.className='rb'+(rk===k?' '+r2.cls:'');
+      });
+      updBtn();
+    });
+  });
+
+  // Comment save
+  var ta = document.getElementById('comment-ta');
+  if(ta){ ta.addEventListener('input',function(){ a.comment=ta.value; }); }
+
+  var bk=document.getElementById('btn-bk');
+  bk.disabled=i===0; bk.style.opacity=i===0?'0.3':'1';
+  document.getElementById('btn-nx').textContent=i<total-1?'다음 문항':'결과 보기';
+  updBtn();
+}
+
+function updBtn(){
+  var a=S.ans[S.cur];
+  var ok=a.rat!==null && a.oid.length>0;
+  document.getElementById('btn-nx').disabled=!ok;
+}
+
+// ── NAV ──────────────────────────────────────────────────────────
+document.getElementById('btn-bk').addEventListener('click',function(){
+  if(S.cur>0){S.cur--;renderQ();}
+});
+
+document.getElementById('btn-nx').addEventListener('click',function(){
+  var i=S.cur;
+  if(S.ans[i].oid.length===0){toast('정보수집방법을 선택해주세요');return;}
+  if(S.ans[i].rat===null){toast('평정기호를 선택해주세요');return;}
+
+  // Check 4 consecutive minus
+  var consecutiveMinus = 0;
+  for(var k=i;k>=0;k--){
+    if(S.ans[k].rat==='-') consecutiveMinus++;
+    else break;
+  }
+  if(consecutiveMinus>=4){
+    S.stopped=i+1;
+    calcAndShowResult();
+    return;
+  }
+
+  if(i<QS.length-1){S.cur++;renderQ();document.getElementById('qa').scrollTop=0;}
+  else{calcAndShowResult();}
+});
+
+
+
+// ── LEVEL MODAL ───────────────────────────────────────────────────
+function getSubLevel(lv, lastNonMinusIdx){
+  // Returns the sub-level string ('1','2','3' etc.) based on position in range
+  var rangeLen = lv.range[1] - lv.range[0] + 1;
+  var posInRange = lastNonMinusIdx - (lv.range[0] - 1); // 0-indexed
+  var parts = lv.lv.split('~');
+  return (posInRange < rangeLen / 2) ? parts[0] : parts[1];
+}
+
+function calcFinalLevel(){
+  var lastQ = S.stopped ? S.stopped - 1 : S.cur; // 0-indexed last answered
+
+  // ── Find the level where stopping occurred ──
+  var stoppedLv = getLv(lastQ + 1); // 1-indexed
+  if(!stoppedLv){ stoppedLv = LEVELS[LEVELS.length-1]; }
+
+  var stoppedLvIdx = LEVELS.indexOf(stoppedLv);
+
+  // ── Count non-minus in the stopped level ──
+  var stoppedStart = stoppedLv.range[0] - 1; // 0-indexed
+  var stoppedEnd   = Math.min(stoppedLv.range[1] - 1, lastQ); // 0-indexed
+
+  var nonMinusInStopped = [];
+  for(var i=stoppedStart; i<=stoppedEnd; i++){
+    if(S.ans[i].rat && S.ans[i].rat!=='-') nonMinusInStopped.push(i);
+  }
+
+  var stoppedRangeLen = stoppedLv.range[1] - stoppedLv.range[0] + 1;
+  // Position of last non-minus within stopped level (0-indexed relative to level start)
+  var lastNonMinusPos = nonMinusInStopped.length > 0
+    ? nonMinusInStopped[nonMinusInStopped.length-1] - stoppedStart
+    : -1;
+
+  // ── CEILING EFFECT CHECK ──
+  // Ceiling = entered new level but only 1 non-minus answer AND it's in the first 1/3 of that level
+  var isCeiling = (
+    nonMinusInStopped.length <= 1 &&
+    (lastNonMinusPos === -1 || lastNonMinusPos < Math.ceil(stoppedRangeLen / 3))
+  );
+
+  if(isCeiling && stoppedLvIdx > 0){
+    // ── Go back to previous level ──
+    var prevLv = LEVELS[stoppedLvIdx - 1];
+    var prevStart = prevLv.range[0] - 1;
+    var prevEnd   = prevLv.range[1] - 1;
+
+    // Find last non-minus in previous level
+    var lastNonMinusInPrev = -1;
+    for(var j=prevEnd; j>=prevStart; j--){
+      if(S.ans[j].rat && S.ans[j].rat!=='-'){ lastNonMinusInPrev=j; break; }
+    }
+
+    if(lastNonMinusInPrev === -1) return prevLv.lv.split('~')[0];
+    return getSubLevel(prevLv, lastNonMinusInPrev);
+  }
+
+  // ── Normal: no ceiling effect ──
+  if(nonMinusInStopped.length === 0){
+    // Nothing passed in stopped level either -> go to previous
+    if(stoppedLvIdx === 0) return '1';
+    var pLv = LEVELS[stoppedLvIdx - 1];
+    var pStart = pLv.range[0] - 1;
+    var pEnd   = pLv.range[1] - 1;
+    var lastInPrev = -1;
+    for(var k=pEnd; k>=pStart; k--){
+      if(S.ans[k].rat && S.ans[k].rat!=='-'){ lastInPrev=k; break; }
+    }
+    if(lastInPrev === -1) return '1';
+    return getSubLevel(pLv, lastInPrev);
+  }
+
+  return getSubLevel(stoppedLv, nonMinusInStopped[nonMinusInStopped.length-1]);
+}
+
+
+function calcSc2Total(){
+  var total=0;
+  S.sc2ans.forEach(function(v){ if(v!==null) total+=v; });
+  return Math.round(total*100)/100;
+}
+
+window.showAllRating = function(idx){
+  var g = Q_RATING_GUIDE[idx];
+  if(!g) return;
+  var syms = [{k:'R',label:'R',color:'#4f46e5'},{k:'P',label:'+',color:'#27856f'},{k:'PM',label:'+/-',color:'#b07d1a'},{k:'M',label:'-',color:'#dc2626'}];
+  document.getElementById('sc2-info-title').textContent = idx+'번 문항 평정기준';
+  document.getElementById('sc2-info-table').innerHTML = syms.map(function(s){
+    return '<tr>'
+      +'<td style="padding:10px 10px;border-bottom:1px solid #edf2f7;vertical-align:top;white-space:nowrap">'
+        +'<span style="display:inline-block;padding:2px 8px;border-radius:12px;background:'+s.color+';color:#fff;font-size:12px;font-weight:800">'+s.label+'</span>'
+      +'</td>'
+      +'<td style="padding:10px 10px;border-bottom:1px solid #edf2f7;font-size:13px;color:#475569;line-height:1.7">'+(g[s.k]||'—')+'</td>'
+      +'</tr>';
+  }).join('');
+  document.getElementById('mo-sc2-info').classList.add('show');
+};
+
+window.showQRating = function(idx, sym){
+  var g = Q_RATING_GUIDE[idx];
+  if(!g) return;
+  var labels = {R:'R — 이 수준에서 아직 나타나지 않음',P:'+ — 일관되게 나타남',PM:'+/- — 때때로 나타남',M:'- — 완전히 달성됨'};
+  var colors = {R:'#e05a7a',P:'#3db8a0',PM:'#e8a838',M:'#3d7a6e'};
+  var desc = g[sym] || '';
+  document.getElementById('sc2-info-title').innerHTML =
+    '<span style="padding:3px 10px;border-radius:12px;background:'+colors[sym]+';color:#fff;font-size:13px;font-weight:800;margin-right:8px">'+sym+'</span>'
+    + labels[sym];
+  document.getElementById('sc2-info-table').innerHTML =
+    '<tr><td style="padding:14px 12px;font-size:13px;color:#475569;line-height:1.8">'+desc+'</td></tr>';
+  document.getElementById('mo-sc2-info').classList.add('show');
+};
+
+window.showAllRating = function(idx){
+  var g = Q_RATING_GUIDE[idx];
+  if(!g) return;
+  var syms = [{k:'R',label:'R',color:'#4f46e5'},{k:'P',label:'+',color:'#27856f'},{k:'PM',label:'+/-',color:'#b07d1a'},{k:'M',label:'-',color:'#dc2626'}];
+  document.getElementById('sc2-info-title').textContent = idx+'번 문항 평정기준';
+  document.getElementById('sc2-info-table').innerHTML = syms.map(function(s){
+    return '<tr>'
+      +'<td style="padding:10px 10px;border-bottom:1px solid #edf2f7;vertical-align:top;white-space:nowrap">'
+        +'<span style="display:inline-block;padding:2px 8px;border-radius:12px;background:'+s.color+';color:#fff;font-size:12px;font-weight:800">'+s.label+'</span>'
+      +'</td>'
+      +'<td style="padding:10px 10px;border-bottom:1px solid #edf2f7;font-size:13px;color:#475569;line-height:1.7">'+(g[s.k]||'—')+'</td>'
+      +'</tr>';
+  }).join('');
+  document.getElementById('mo-sc2-info').classList.add('show');
+};
+
+window.showQRating = function(idx, sym){
+  var g = Q_RATING_GUIDE[idx];
+  if(!g) return;
+  var labels = {R:'R : 아직 나타나지 않음',P:'+ : 일관되게 나타남',PM:'+/- : 때때로 나타남',M:'- : 완전히 달성됨'};
+  var colors = {R:'#e05a7a',P:'#3db8a0',PM:'#e8a838',M:'#3d7a6e'};
+  var symDisplay = {R:'R',P:'+',PM:'+/-',M:'-'}[sym];
+  document.getElementById('sc2-info-title').innerHTML =
+    '<span style="display:inline-flex;align-items:center;gap:8px">'
+    +'<span style="padding:3px 10px;border-radius:12px;background:'+colors[sym]+';color:#fff;font-size:13px;font-weight:800">'+symDisplay+'</span>'
+    +'<span style="font-size:13px;color:#64748b">'+labels[sym]+'</span>'
+    +'</span>';
+  document.getElementById('sc2-info-table').innerHTML =
+    '<tr><td style="padding:14px 12px;font-size:13px;color:#475569;line-height:1.8">'+(g[sym]||'해당 없음')+'</td></tr>';
+  document.getElementById('mo-sc2-info').classList.add('show');
+};
+
+window.showQGuide = function(idx){
+  var guide = Q_GUIDE[idx];
+  if(!guide) return;
+  document.getElementById('sc2-info-title').textContent = (idx+1)+'번 문항 검사 지침';
+  document.getElementById('sc2-info-table').innerHTML =
+    guide.map(function(step,si){
+      return '<tr><td style="padding:8px 10px;border-bottom:1px solid #edf2f7;vertical-align:top;width:20px;color:#3db8a0;font-weight:800;font-size:12px">'+(si+1)+'</td>'
+        +'<td style="padding:8px 10px;border-bottom:1px solid #edf2f7;font-size:13px;color:#475569;line-height:1.7">'+step+'</td></tr>';
+    }).join('');
+  document.getElementById('mo-sc2-info').classList.add('show');
+};
+
+window.showSc2ScoreInfo = function(idx, si){
+  var info = SC2_INFO[idx];
+  if(!info || !info.rows[si]) return;
+  var r = info.rows[si];
+  document.getElementById('sc2-info-title').textContent = info.title + ' — ' + r.score + '점';
+  document.getElementById('sc2-info-table').innerHTML =
+    '<tr><td style="padding:12px;font-size:13px;color:#475569;line-height:1.9">'+r.desc+'</td></tr>';
+  document.getElementById('mo-sc2-info').classList.add('show');
+}
+
+window.showSc2Info = function(idx){
+  var info = SC2_INFO[idx];
+  if(!info) return;
+  document.getElementById('sc2-info-title').textContent = info.title;
+  var rows = info.rows.map(function(r){
+    return '<tr>'
+      +'<td style="padding:8px 10px;font-weight:800;color:#1a4a6b;border-bottom:1px solid #edf2f7;white-space:nowrap;width:36px">'+r.score+'</td>'
+      +'<td style="padding:8px 10px;color:#475569;border-bottom:1px solid #edf2f7;line-height:1.6;font-size:12px">'+r.desc+'</td>'
+      +'</tr>';
+  }).join('');
+  document.getElementById('sc2-info-table').innerHTML = rows;
+  document.getElementById('mo-sc2-info').classList.add('show');
+}
+
+function calcAndShowResult(){
+  S.finalLv = calcFinalLevel();
+  showLvResultPopup();
+}
+
+function showLvResultPopup(){
+  // Find level by exact match or sub-level number
+  var lv = null;
+  for(var li=0;li<LEVELS.length;li++){
+    var l=LEVELS[li];
+    var parts=l.lv.split('~');
+    if(l.lv===S.finalLv || parts[0]===S.finalLv || parts[1]===S.finalLv){
+      lv=l; break;
+    }
+  }
+  if(!lv) lv=LEVELS[0];
+
+  var body = document.getElementById('lv-result-body');
+  body.innerHTML =
+    '<div style="display:inline-block;background:'+lv.bg+';border:2px solid '+lv.color+';border-radius:12px;padding:12px 24px;margin-bottom:12px">' +
+      '<div style="font-size:13px;color:'+lv.color+';font-weight:700;letter-spacing:1px;margin-bottom:6px"></div>' +
+      '<div style="font-family:serif;font-size:32px;color:'+lv.color+';line-height:1;margin-bottom:6px">Lv.'+S.finalLv+'</div>' +
+      '<div style="font-size:13px;color:'+lv.color+';opacity:.85">'+lv.label+'</div>' +
+    '</div>' +
+    '<div style="font-size:14px;color:#64748b;line-height:1.65;padding:0 4px;font-weight:700">'+lv.desc+'</div>' +
+    (S.stopped ? '<div style="font-size:12px;color:#ef4444;margin-top:10px;font-weight:600">※ '+S.stopped+'번 문항에서 평가 종료 (Ceiling Effect 반영)</div>' : '<div style="font-size:12px;color:#64748b;margin-top:10px">※ Ceiling Effect 분석 반영된 결과입니다</div>');
+
+  document.getElementById('mo-lv-result').classList.add('show');
+}
+
+// ── RESULT ────────────────────────────────────────────────────────
+document.getElementById('btn-see-result').addEventListener('click',function(){
+  document.getElementById('mo-lv-result').classList.remove('show');
+  showScale2();
+});
+
+var SC2_INFO = {
+  0: {
+    title: '1. 특정 색상 선호',
+    rows: [
+      {score:'0',   desc:'1가지의 선호하는 색상에만 시각적 주의를 한다.'},
+      {score:'.25', desc:'선호하는 색상에 끌리되, 추가로 1~2가지 색상에도 시각적 주의를 유도하거나 촉진할 수 있다.'},
+      {score:'.5',  desc:'아주 짙은 색이나 형광색이 시각적 주의를 촉진한다.<br>특정 색상 선호가 감소한다.<br>3차원·2차원의 두드러진 특징을 색상으로 강조 표시하는 것이 필요하다.'},
+      {score:'.75', desc:'자료나 환경에 대한 색상 강조 표시가 때때로 필요하다.'},
+      {score:'1',   desc:'색상은 더 이상 시각적 주의에 중요한 요소가 아니다.'}
+    ]
+  },
+  1: {
+    title: '2. 움직임에 대한 요구(끌림)',
+    rows: [
+      {score:'0',   desc:'움직이거나 반사하는 속성의 물체에만 시각적 주의를 한다.<br>선풍기에 시각적으로 끌릴 수 있다.'},
+      {score:'.25', desc:'움직임은 시각적 주의를 유도·유지하는 데 필요하다.<br>근거리의 관련 없는 주변 움직임에 시각적 주의가 방해받을 수 있다.<br>대상을 바라보려고 고개나 몸을 돌릴 수 있다.'},
+      {score:'.5',  desc:'움직임은 시각적 주의 유도에는 필요하지만 지속에는 필요하지 않다.<br>최대 2.4m~3m까지 주변 움직임에 시각적 주의가 가능하다.<br>최대 2.4m까지 관련 없는 주변 움직임에 시각적 주의가 방해받을 수 있다.'},
+      {score:'.75', desc:'때때로 움직임이 시각적 주의 유도에 필요하다.<br>최대 6m 거리까지 관련 없는 주변 움직임에 시각적 주의가 방해받을 수 있다.'},
+      {score:'1',   desc:'움직임은 시각적 주의 유도·유지에 필요하지 않다.<br>움직임이 시각적 환기를 일으키지만 사로잡히지는 않는다.'}
+    ]
+  },
+  2: {
+    title: '3. 시각적(반응) 지연',
+    rows: [
+      {score:'0',   desc:'대상을 제시할 때마다 긴 시각적 지연이 일어난다.'},
+      {score:'.25', desc:'시각적 지연이 자주 일어나지만, 일정 시간 바라보면 지연이 약간 감소한다.'},
+      {score:'.5',  desc:'시각적 주의 시도의 약 50%에서만 지연이 일어난다.<br>시각적 지연은 피로하거나 과도한 자극을 받고 있다는 신호다.'},
+      {score:'.75', desc:'시각적 지연은 드물게 일어난다.<br>배고프거나 피곤하거나 과도한 자극이 있거나 발작 후에 주로 나타난다.'},
+      {score:'1',   desc:'시각적 반응에 지연이 없다. 지연 없이 대상을 바라본다.'}
+    ]
+  },
+  3: {
+    title: '4. 특정 시야 선호',
+    rows: [
+      {score:'0',   desc:'한쪽 측면 시야 영역에 국한하여 대상의 위치를 알아차린다.'},
+      {score:'.25', desc:'선호하는 시야 영역에서만 위치를 알아차리고 짧게 고시한다.<br>1개의 추가적인 측면 시야 영역에서 시각적 주의를 하기 시작한다.'},
+      {score:'.5',  desc:'2개의 측면 시야 영역에서 고시가 일어난다.<br>1개의 추가적인 측면 시야 영역에서 고시를 하기 시작한다.'},
+      {score:'.75', desc:'3개의 시야 영역에서 고시가 안정적으로 이루어진다.<br>하측 시야 기능은 일반적이지 않다.'},
+      {score:'1',   desc:'우측·좌측·상측·하측 시야 영역에서 고시가 이루어진다.'}
+    ]
+  },
+  4: {
+    title: '5. 시각적 복잡성의 어려움',
+    rows: [
+      {score:'0',   desc:'<b>물체 표면의 복잡성:</b> 1가지 색상의 물체에만 시각적 주의를 한다.<br><b>시각적 배열의 복잡성:</b> 어둡게 한 방의 검은색 배경에서만 시각적 주의를 한다.<br><b>감각 환경의 복잡성:</b> 다른 감각 자극이 없는 방에서만 시각적 주의를 한다.<br><b>얼굴의 복잡성:</b> 사람 얼굴에 시각적 주의를 하지 않는다.'},
+      {score:'.25', desc:'<b>물체 표면의 복잡성:</b> 2가지 이상 색상의 물체 위치를 알아차리고 짧게 고시한다.<br><b>시각적 배열의 복잡성:</b> 보통 밝기의 방에서 검은색 배경의 물체를 짧게 고시한다.<br><b>감각 환경의 복잡성:</b> 작은 친숙한 소리나 1가지 감각 자극이 있을 때도 물체의 위치를 찾는다.<br><b>얼굴의 복잡성:</b> 친숙한 사람 얼굴을 알아차리지만 관통하여 보는 것 같다고 주변에서 말한다.'},
+      {score:'.5',  desc:'<b>물체 표면의 복잡성:</b> 3~4가지 색상·패턴의 물체를 고시·구별한다. 2차원 이미지를 백라이트 화면에서 볼 수 있다.<br><b>시각적 배열의 복잡성:</b> 2~3가지 색상 배경의 물체를 고시한다. 3~4가지 요소가 있는 배경에서 단순 2차원 이미지를 인식한다.<br><b>감각 환경의 복잡성:</b> 보통 수준의 감각 자극이 있을 때도 물체에 고시한다.<br><b>얼굴의 복잡성:</b> 친숙한 사람 얼굴을 짧게 고시한다. 거울 속 자기 얼굴에 짧은 눈 맞춤을 한다.'},
+      {score:'.75', desc:'<b>물체 표면의 복잡성:</b> 4~5가지 색상·패턴 물체를 고시·인식한다. 백라이트 없이도 2차원 이미지를 볼 수 있다.<br><b>시각적 배열의 복잡성:</b> 복잡한 배경의 3차원 물체를 고시한다. 최대 20개 요소 배경에서 2차원 이미지를 인식한다.<br><b>감각 환경의 복잡성:</b> 경쟁하는 감각 자극이 있을 때도 고시한다. 복잡한 새 환경에서는 시각적 주의 능력이 감소할 수 있다.<br><b>얼굴의 복잡성:</b> 대부분의 사람 얼굴에 눈 맞춤을 한다. 낯선 얼굴에는 시각적 주의가 감소한다.'},
+      {score:'1',   desc:'<b>물체 표면의 복잡성:</b> 또래처럼 물체를 고시·구별·인식한다.<br><b>시각적 배열의 복잡성:</b> 또래처럼 어느 배경에서도 대상의 위치를 찾는다.<br><b>감각 환경의 복잡성:</b> 시각적 주의·위치 찾기·고시가 또래와 유사하다.<br><b>얼굴의 복잡성:</b> 모든 사회적 상호작용에서 사람 얼굴에 눈 맞춤이 이루어진다.'}
+    ]
+  },
+  5: {
+    title: '6. 빛에 대한 요구(끌림)',
+    rows: [
+      {score:'0',   desc:'빛 또는 빛이 나는 물체에만 시각적 주의를 한다.<br>1차 광원에서 다른 곳으로 시각적 주의를 돌릴 수 없다.<br>강한 빛이 눈에 들어와도 눈을 감아 방어하지 않는다.'},
+      {score:'.25', desc:'빛이 나는 물체에서 시각적 주의가 시작된다.<br>환경 조명이 감소·조절될 때는 다른 대상으로 시선을 돌릴 수 있다.<br>강한 빛에 짧게 또는 길게 눈을 감아 방어할 수 있다.<br>빛과 함께 제시하는 물체에 시각적 주의를 한다.'},
+      {score:'.5',  desc:'빛이 나는 물체에 끌리지만, 밝게 조명된 환경에서도 물체를 볼 수 있다.<br>어두운 배경에 빛이 나지 않는 물체를 제시하면 시각적 주의를 한다.'},
+      {score:'.75', desc:'빛은 시각적 주의를 일으키지만 더 이상 방해하지 않는다.<br>다양한 조명 환경에서 물체에 시각적 주의를 한다.'},
+      {score:'1',   desc:'빛은 더 이상 시각적 주의를 방해하지 않는다.<br>다양한 조명 환경에서 또래처럼 물체에 시각적 주의를 한다.'}
+    ]
+  },
+  6: {
+    title: '7. 원거리 보기의 어려움',
+    rows: [
+      {score:'0',   desc:'근거리(30cm 이내)에서만 시각적 주의를 한다.'},
+      {score:'.25', desc:'60~90cm 거리에서 움직이는 물체에 시각적 주의를 한다.'},
+      {score:'.5',  desc:'120~180cm 거리에서 시각적 주의를 한다.'},
+      {score:'.75', desc:'최대 3m 거리까지 시각적 주의를 한다.'},
+      {score:'1',   desc:'원거리에서도 시각적 주의를 할 수 있으며 또래와 비슷하다.'}
+    ]
+  },
+  7: {
+    title: '8. 비전형적인 시각 반사',
+    rows: [
+      {score:'0',   desc:'시각적 위협에 눈 깜박임이 없다.<br>안면 접촉에도 눈 깜박임이 없다.'},
+      {score:'.25', desc:'안면 접촉에 눈 깜박임이 있으나 지연되거나 일관되지 않다.'},
+      {score:'.5',  desc:'안면 접촉에 일관되게 눈 깜박임이 있다.<br>시각적 위협에 간헐적으로 눈 깜박임이 있다.'},
+      {score:'.75', desc:'시각적 위협에 일관되게 눈 깜박임이 있다.'},
+      {score:'1',   desc:'시각적 위협과 안면 접촉 모두에 일관되게 눈 깜박임이 있다.'}
+    ]
+  },
+  8: {
+    title: '9. 시각적 새로움의 어려움',
+    rows: [
+      {score:'0',   desc:'새로운 물체를 보기 위해 매우 많은 반복 노출이 필요하다(10회 이상).'},
+      {score:'.25', desc:'새로운 물체를 보기 위해 여러 번 노출이 필요하다(4~9회).'},
+      {score:'.5',  desc:'새로운 물체를 보기 위해 몇 번의 노출이 필요하다(2~3회).'},
+      {score:'.75', desc:'새로운 물체를 1~2번 노출 후 볼 수 있다.'},
+      {score:'1',   desc:'새로운 물체를 처음 제시할 때부터 볼 수 있다.'}
+    ]
+  },
+  9: {
+    title: '10. 시각적으로 안내된 신체 도달의 어려움',
+    rows: [
+      {score:'0',   desc:'시각을 사용하여 물체에 손을 뻗지 못한다.<br>보기와 손 뻗기가 분리되어 있다.'},
+      {score:'.25', desc:'물체를 본 후 시선을 돌리고 손을 뻗는다(순차적).'},
+      {score:'.5',  desc:'간헐적으로 물체를 보면서 손을 뻗을 수 있다.'},
+      {score:'.75', desc:'대부분의 경우 물체를 보면서 손을 뻗을 수 있다.'},
+      {score:'1',   desc:'물체를 보면서 동시에 손을 뻗을 수 있으며 또래와 비슷하다.'}
+    ]
+  }
+}
+
+
+
+var Q_RATING_GUIDE = [null,
+  {R:'물체나 사람들의 얼굴을 고시한다.',P:'물체나 사람들의 얼굴을 가끔 힐끗 볼 수 있지만, 시각적 주의가 간헐적이며, 눈과 대상 간의 눈 맞춤이 드물다.',PM:'물체나 사람들의 얼굴에 일관성 없는 짧은 시각적 주의를 한다(이것은 관찰이 아닌 보고서에 의해서만 확인되는 경향이 있음).',M:'보고서 또는 관찰에 의하면, 어떠한 물체나 사람들의 얼굴을 향한 시각적 주의도 없다.'},
+  {R:'일차 광원(빛)이 있는 곳에서도 대상(물체)을 응시할 수 있다.',P:'실내와 실외의 광원을 응시한다. 빛을 차단하지(조명을 끄지) 않으면 다른 대상으로 시각적 주의를 할 수 없다. 빛으로부터 떨어진 곳에 자리 배치하는 것이 필요하다.',PM:'1차 광원이 있는 곳에서도 가끔 대상(물체)에 시각적 주의를 할 수 있다.',M:'빛이 나오는 대상이나 다른 대상에도 시각적 주의를 하지 못한다.'},
+  {R:'대상을 바라보는 데 지연이 거의 또는 전혀 일어나지 않는다.',P:'대상을 바라보거나, 새로운 물체를 제시하거나, 새로운 활동을 시작할 때마다 지속적인 매번 지연이 일어난다.',PM:'단지 피곤하거나, 스트레스가 있거나, 아프거나, 배가 고프거나, 과도한 자극을 받을 때에만 시각적 지연이 일어난다.',M:'대상을 바라보는 데 심각한 지연이 일어난다. 대상을 바라보는 경우가 드물다.'},
+  {R:'단지 시각적·청각적·촉각적 방해물이 없는 곳에서도 대상에 시각적 주의를 한다.',P:'단지 시각적·청각적·촉각적 방해물이 없는 조건에서만 시각적으로 반응한다. 특정한 친숙하거나 새로운 물체/사람들의 얼굴에 시각적으로 주의를 한다.',PM:'특정한 친숙한 시각적·청각적·촉각적 방해물이 있는 곳에서 때때로(가끔) 시각적 주의를 한다.',M:'어떠한 시각적 대상에 대해서도 시각적 주의가 나타나지 않는다.'},
+  {R:'어느 색상의 물체도 힐끗 보거나/또는 1가지 이상의 색상으로 된 물체도 바라본다.',P:'1가지 색상의 물체를 힐끗 보거나 잠깐 고시한다. 이러한 1가지 색상은 보통 아동이 선호하는 색상이다.',PM:'선호하는 색상의 물체를 힐끗 보거나 잠깐 고시한다. 때때로 다른 색상의 물체도 힐끗 바라볼 수 있다. 1가지 이상의 색상으로 된 물체도 힐끗 보거나 잠깐 고시한다.',M:'어느 색상의 대상에도 시각적 주의를 하지 않는다.'},
+  {R:'물체가 움직이지도, 빛이 나오지도, 반사하지 않더라도, 물체를 바라본다.',P:'단지 움직이거나 움직이는 부분이 있는 물체만을 바라보거나, 빛이 나오거나, 반사하는 자료만을 바라본다.',PM:'시각적 주의를 (유도)하기 위해 움직이거나 그리고/또는 빛이 나오거나 반사하는 물체가 필요할 수 있다. 움직임의 속성이 없는 물체에도 때때로(가끔) 시각적 주의가 일어난다.',M:'움직임이 있거나 움직임이 없는 대상에도 시각적 주의가 나타나지 않는다.'},
+  {R:'45cm 이상 떨어져 있는 물체를 바라본다.',P:'45cm 이내 거리에 있는 물체만 힐끗 보거나 잠깐 고시한다.',PM:'45cm 이상 떨어져 있는 물체를 때때로(가끔) 힐끗 바라보거나 잠깐 고시한다.',M:'물체가 어느 거리에 있더라도 시각적 주의가 나타나지 않는다.'},
+  {R:'안면 접촉이나 얼굴을 향한 시각적 위협에 눈을 깜박인다.',P:'눈을 깜박이지 않는다.',PM:'안면 접촉이나 시각적 위협에 눈을 깜박인다.',M:'보통 양 눈을 뜨지 않고 있다(감고 있다).'},
+  {R:'사람들의 얼굴을 똑바로 쳐다본다.',P:'사람들의 얼굴에 시각적 주의를 하지 않는다.',PM:'눈 맞춤을 하지 않더라도, 사람들의 얼굴을 때때로 힐끗 바라본다.',M:'어떠한 종류의 대상에 대해서도 시각적 주의를 하지 않는다.'},
+  {R:'시각 자극이나 다른 감각 자극이 있더라도, 친숙하거나 새로운 물체/사람들의 얼굴에 눈 맞춤을 한다.',P:'시각적·청각적·촉각적 방해물이 감소되거나 제거될 때에만 간헐적으로 눈 맞춤을 한다. 대상을 바라보는 동안 낮은 수준의 감각 자극(정보)은 견딜 수 있다.',PM:'때때로 눈과 물체 간의 눈 맞춤을 한다. 그러나 고시를 위한 환경 조건이 변할 수 있다.',M:'대상을 향해 신체를 돌릴 수는 있지만, 눈과 물체 간에 눈 맞춤은 하지 않는다.'},
+  {R:'1차 광원(빛)을 응시하지 않는다.',P:'빛을 응시하지만, 통제된 환경에서 대상을 제시하면 시각적 주의를 빛에서 대상으로 돌릴 수 있다.',PM:'대상에 대한 시각적 주의를 위해 1차 광원을 제거해야 하는 경우는 드물다.',M:'대상에 대한 시각적 주의를 위해 모든 1차 광원을 통제해야 한다.'},
+  {R:'친숙한 물체를 바라보는 데는 지연이 거의 일어나지 않는다.',P:'대상을 바라보는 데 시간이 다소 걸리거나 짧은 시간의 지연이 일어난다. 지속적으로 시각을 사용하는 상황에서는 시각적 (반응) 지연이 사라질 수 있다.',PM:'대상을 바라보는 데 자주 시각적 (반응) 지연이 일어나거나 친숙한 물체를 제시할 때는 지연이 일어나지 않는다.',M:'대상을 바라볼 때 항상 지연이 일어난다.'},
+  {R:'좋아하는 물체와 유사하거나 유사하지 않거나 이전에 본 적이 없더라도 상관없이 물체를 바라보거나 눈 맞춤을 할 수 있다.',P:'유사한 특징이 있지만, 색상, 움직임, 복잡성 중 1가지가 일치하지 않는 새로운 물체를 힐끗 바라보거나 눈 맞춤을 할 수 있다.',PM:'아주 친숙한 물체 몇 가지만 힐끗 바라보거나 눈 맞춤을 할 수 있다.',M:'어느 색상이나 패턴의 물체에도 시각적 주의를 하지 않는다.'},
+  {R:'안면 접촉 그리고/또는 얼굴을 향한 시각적 위협에 눈을 깜박인다.',P:'안면 접촉 그리고/또는 얼굴을 향한 시각적 위협에 눈을 깜박이지만, 눈 깜박임이 다소 지연된다.',PM:'안면 접촉에는 눈을 깜박이지만, 얼굴을 향한 시각적 위협에는 눈을 깜박이지 않는다.',M:'안면 접촉이나 얼굴을 향한 시각적 위협에 눈 깜박임이 일어나지 않는다.'},
+  {R:'특정 색상에 상관 없이, 물체에 시각적 주의를 한다.',P:'여러 색상의 물체 중에서 특정 1가지 색상의 물체를 일관되게 바라보거나 눈 맞춤을 한다.',PM:'선호하는 색상은 대상을 바라보는 것을 유도(시작)할 수 있다. 시각적 주의를 유도하기 위해 대상(물체)의 일부에 선호하는 색상을 넣을 수 있다.',M:'물체에 대한 시각적 주의가 나타나지 않는다.'},
+  {R:'모든 시야 영역(방향)에서 시각적 주의를 한다.',P:'특정 주변 시야 영역(방향) 그리고/또는 중심 시야 영역(방향)에 대상을 제시할 때 힐끗 바라보거나 눈 맞춤을 한다. 특정 시야 선호는 \'CVI Range 1~2(레벨)\'보다 강하지 않다.',PM:'특정 시야 선호가 약간 남아 있지만, 대부분의 시야 영역(방향)에서 대상을 힐끗 쳐다보거나 눈 맞춤을 한다.',M:'1가지 시야 영역(방향)에서만 물체를 힐끗 쳐다보거나 눈 맞춤을 한다.'},
+  {R:'60cm 이상 거리에서도 움직이거나 반사하는 속성이 없는 물체에 시각적 주의를 한다.',P:'60cm 이내 거리에서 움직이는 물체나 빛이 나오거나 반사하는 자료를 힐끗 바라보거나 눈 맞춤을 한다.',PM:'시각적 주의를 위해 움직이거나 반사하는 물체가 필요하다. 시각적 주의를 위해 물체를 구성하는 1가지 요소라도 움직이거나 빛이 나오거나 반사하는 속성이 필요하다. 보는 거리는 45cm 이내이어야 한다.',M:'시각적 주의를 위해 움직이거나 반사하는 속성의 자료가 필수적이고, 보는 거리는 45cm 이내이어야 한다.'},
+  {R:'대상을 바라보고 손을 뻗어 도달하는 행위들이 거의 동시에 일어난다.',P:'대상에 손을 뻗어 접촉하거나 두드리는 시도를 하지만, \'시각적으로 안내된 신체 도달\'을 하지 않는다. 대상을 바라보고, 고개를 돌리고, 그다음 손을 뻗어 접촉한다.',PM:'때때로(가끔) \'시각적으로 안내된 신체 도달\'을 한다.',M:'대상에 손을 뻗어 접촉하거나 두드리는 시도가 없다.'},
+  {R:'선호하는 색상에 상관없이, 다양한 색상이나 패턴이 있는 물체에 시각적 주의를 한다.',P:'2~3가지 색상의 패턴이 있는 물체에도 바라본다.',PM:'2가지 색상의 대상을 바라보고, 가끔은 3가지 색상 패턴이 있는 대상을 바라본다. 선호하는 색상이 포함된 1가지를 구성하는 색상이 있다.',M:'선호하는 1가지 색상의 물체에만 시각적 주의를 한다.'},
+  {R:'높은 수준과 낮은 수준의 빛 밝기 모두에 일관되게 시각적 주의를 하지 않는다.',P:'빛을 응시한다(끌린다). 백라이트(후광 조명) 방식의 물체를 지원한다.',PM:'때때로(가끔) 일차 광원을 응시한다. 새로운 물체나 이미지를 제시할 때는 시각적 지원(후광 조명 등)이 필수적이다.',M:'빛을 응시하는 행동이 일관되게 나타난다.'},
+  {R:'친숙한 대상이 복잡하지 않은 대상에 시각적 주의를 하는 데 지연이 일어나지 않는다.',P:'피곤하거나 부적절한 감각 자극을 가진 대상에 시각적 주의를 하는 데 지연이 일어나지 않는다.',PM:'대상에 대한 시각적 주의가 때때로(가끔) 지연되어 나타난다.',M:'대상에 대한 시각적 주의가 일관되게 지연되어 나타난다.'},
+  {R:'근거리에서도 최대 1.8m 거리까지는 시각적 주의를 위해 움직이고, 빛이 나거나 반사하는 자료가 필요하지 않다.',P:'움직이거나, 반짝이거나, 반사하는 자료에 시각적 주의가 대체로 일관되게 나타난다. 대상(물체)의 일부 요소가 움직임의 속성이 있어야 한다. 즉, 시각적 주의를 위해 대상 전체가 움직이거나, 빛이 나거나, 반짝이거나 할 필요는 없다.',PM:'\'움직임\'의 요소는 시각적 주의를 유지하는 데 도움이 된다.',M:'움직임의 요소가 있는 자료만이 시각적 주의를 유도하거나 유지한다.'},
+  {R:'일반적인 다감각 환경에서 시각적 주의를 하고 유지한다.',P:'작은 소리, 친숙한 목소리 또는 친숙한 환경음이 있는 곳에서도 시각적 주의를 유지한다.',PM:'소리가 나는 곳에서도 때때로 시각적 주의를 유지할 수 있다. 대상을 바라보는 동안 1~2가지의 소리를 견디지만, 많은 종류의 소리에는 시각적 주의가 방해를 받는다.',M:'다감각 자극(정보)이 있는 곳에서 시각적 주의를 전혀 하지 못하거나 거의 하지 못한다.'},
+  {R:'안면 접촉에 눈 깜박임이 일관되게 나타난다.',P:'안면 접촉과 동시에 눈 깜박임이 일관되게 나타난다.',PM:'안면 접촉에 눈 깜박임이 나타나기 시작한다.',M:'안면 접촉에 눈 깜박임이 없거나 때때로(가끔) 나타난다.'},
+  {R:'시각적 위협에 눈 깜박임이 일관되게 나타난다.',P:'시각적 위협에 눈 깜박임이 50% 정도 나타난다.',PM:'시각적 위협에 눈 깜박임이 50% 이하로 나타난다.',M:'시각적 위협에 눈 깜박임이 나타나지 않는다.'},
+  {R:'1.8m 이상 거리에서도 대상에 대한 시각적 주의로 눈 맞춤을 한다.',P:'6m 떨어져 있는 대상을 찾고 고시할 수 있다. 1.2~1.8m 거리의 물체나 움직임을 감지하는 능력은 환경의 복잡성 정도에 따라 우려된다.',PM:'시각적 배경이 복잡하지 않은 경우, 때때로 1.8m 떨어져 있는 대상을 찾고 고시하거나 눈 맞춤을 하는 능력을 보여 준다.',M:'90cm 이내 거리에서만 시각적 주의나 눈 맞춤을 한다.'},
+  {R:'일관되지 않더라도 사람 얼굴에 눈 맞춤을 하고 말소리가 있을 때도 눈 맞춤을 할 수 있다.',P:'친숙한 사람이 말하지 않을 때만 얼굴을 힐끗 보거나 쳐다볼 수 있다.',PM:'사람의 얼굴을 힐끗 보거나 쳐다볼 수 있지만, 일관되지 않거나 일시적이다.',M:'사람의 얼굴을 바라보지 않는다.'},
+  {R:'복잡성의 요구 조건 없이 새로운 물체를 바라본다.',P:'친숙한 물체와 같은 속성을 가진 새로운 물체를 바라본다. 1~2회 정도 제시하면 새로운 물체를 인식하기 시작한다.',PM:'친숙한 물체와 같은 속성을 가진 새로운 물체를 바라본다. 2회 이상 제시하면 새로운 물체를 인식하거나 고시하기 시작한다.',M:'친숙한 물체를 바라본다. 새로운 물체는 친숙한 물체와 아주 많이 유사해야 한다.'},
+  {R:'감각 정보의 양이 시각적 주의를 방해하지 않는다(상관이 없다).',P:'음악이나 소리가 나오는 물체를 바라볼 수 있다.',PM:'다른 감각 자극(정보)이 있는 동안에 때때로 시각적 주의를 할 수 있다. 특정 유형의 감각 자극(정보)이 시각적 주의를 계속 방해할 수 있다.',M:'시각적 주의의 수준은 추가 감각 정보의 여부에 따라 달리 있다.'},
+  {R:'얼굴 중앙을 향해 물체나 손바닥이 빠르게 접근할 때에 눈을 깜박인다.',P:'얼굴 중앙을 향해 물체나 손바닥이 빠르게 접근할 때에 때때로(가끔) 동시에 눈을 깜박인다.',PM:'얼굴 중앙을 향해 물체나 손바닥이 빠르게 접근할 때 때때로(가끔) 동시에 눈을 깜박인다.',M:'시각적 위협에 눈을 깜박이지 않는다.'},
+  {R:'시각 자극(정보)에 지연이 전혀 없다.',P:'대상을 제시하면 이를 인식하는 데 지연이 나타나는 경우가 거의 없다.',PM:'새로운 물체, 복잡한 환경 또는 신체 피로에 따라 지연이 증가할 수 있다.',M:'새로운 대상과 친숙한 대상 모두에 지연이 일관되게 나타난다.'},
+  {R:'움직임이 있는 대상에 대한 시각적 주의가 3m 이상 거리에서도 가능하다. 그리고/또는 정지된 대상에 대한 시각적 주의도 3m 거리까지 가능하다.',P:'3m 거리에서 특정 대상을 찾거나 고시한다. 특히 움직이는 대상에 대해 더욱 그러하다. 3m 거리에서 시각적 주의는 환경의 복잡성 수준에 따라 우려된다.',PM:'환경에서 다른 감각 자극(정보)이 통제된 이후에 3m 거리에서 시각적 주의를 한다.',M:'3m 거리에서는 어느 대상이라도 시각적 주의를 하지 못한다.'},
+  {R:'근거리가 아니어도, 움직이거나 빛이 나오거나 반사하는 속성이 없는 대상을 시각적으로 인식할 수 있다.',P:'45~60cm 이내 거리에서 움직이거나 빛이 나오거나 반사하는 속성이 없는 물체를 시각적으로 인식하고 시각적 주의를 할 수 있다.',PM:'때때로(가끔) 60cm 이상 거리에서도 대상을 시각적으로 발견하고 시각적 주의를 할 수 있다.',M:'60cm 이상 거리에서는 정지된 대상을 인식하거나 시각적 주의를 할 수 없다.'},
+  {R:'대부분의 사람 얼굴에 눈 맞춤을 한다. 알고 있는 사람과 새로운(처음 보는) 사람을 구별한다.',P:'친숙한 얼굴이나 새로운 얼굴을 힐끗 보거나 눈 맞춤을 한다.',PM:'때때로(가끔) 친숙한 사람의 얼굴을 힐끗 보거나 눈 맞춤을 한다.',M:'사람들의 얼굴에 시각적 주의를 하지 않는다.'},
+  {R:'거울에 비친 자기 얼굴에 눈 맞춤을 일관되게 유지한다.',P:'거울에 비친 자기 얼굴에 눈 맞춤을 하지만, 이 자기 얼굴 이미지를 일관되게 할 곳보거나 바라본다.',PM:'거울에 비친 자기 얼굴 이미지를 힐끗 보거나 바라보지만, 일관된 행동이 일관되게 나타나지는 않는다.',M:'거울은 주로 거울에 반사되는 빛을 응시하는 기구에 지나지 않는다.'},
+  {R:'선호하는 색상이 포함되지 않은, 2~3가지 색상으로 구성된 자료에 시각적 주의를 한다.',P:'여러 색상으로 구성된 단순한 패턴(무늬)의 물체나 밝은 색상의 물체에 시각적 주의를 한다.',PM:'몇 가지 단순한 패턴(무늬)의 물체에 시각적 주의를 할 수 있으며, 특히 선호하는 색상으로 강조 표시한 물체나 친숙한 물체에 더욱 시각적 주의를 한다.',M:'선호하는 색상은 물체의 구성 요소로 필수적이다.'},
+  {R:'연령에 적합한 도서, 상징에 있는 구성 요소(elements)를 확인할 수 있다.',P:'복잡하지 않고 1~2가지 색상의 구성의 도서, 상징에 있는 구성 요소(elements)를 확인할 수 있다. 이미지나 상징이 있는 자료를 조사하려고 한다.',PM:'몇 가지 2차원 자료에 시각적 주의를 하고 조사한다. 그리고 친숙한 환경과 새로운 환경에 시각적 호기심을 보인다.',M:'2차원 자료에 시각적 주의를 하지 않는다.'},
+  {R:'새로운 물체나 자료에 시각적 호기심을 보이고 조사하려고 한다.',P:'어떤 색상, 어떤 패턴(무늬)의 물체도 시각적으로 보고 상호작용을 할 수 있으며, 그리고 새로운 것이어도 그러하다.',PM:'한 번의 사전 경험으로, 친숙한 물체의 특징(구성 요소)과 같은 특징(구성 요소)을 가진 다른 물체에 시각적 주의를 한다.',M:'친숙한 물체의 특징(구성 요소)을 가진 다른 물체에 시각적 주의를 한다.'},
+  {R:'복잡한 환경에서 시각적 호기심을 보이거나 6m 이내 거리에서 새로운 요소(elements)를 확인하거나 시각적 주의를 한다.',P:'감각적 복잡성이 매우 심한 환경을 제외하고, 친숙한 환경과 새로운 환경에 시각적 호기심을 보인다.',PM:'감각적 복잡성 수준이 낮은 친숙한 환경에서만 시각적 호기심을 보인다.',M:'시각적 호기심을 보이지 않는다.'},
+  {R:'바람이나 요구를 표현하기 위해 눈으로 응시한다.',P:'대상을 제시하면 대상을 시각적으로 인식하는 데 지연이 없다.',PM:'대상에 대한 시각적 지연이 일어나는 경우가 드물다.',M:'피곤하거나 과도한 자극이 있을 때 대상에 대한 시각적 지연이 일어난다.'},
+  {R:'또래처럼 색상이나 패턴(무늬)에 시각적 주의를 한다.',P:'시각적 주의를 위해 색상으로 강조 표시한 패턴을 수정할 필요가 없다.',PM:'몇 가지 새로운 패턴(무늬)이나 상징의 경우, 시각적 주의를 위해 색상으로 강조 표시하는 것이 필요하다.',M:'대상의 두드러진 특징이나 세부사항(요소)에 대한 시각적 주의를 위해 색상으로 강조 표시하는 것이 필요하다.'},
+  {R:'또래처럼 원거리에서 대상을 시각적으로 찾거나 고시할 수 있다.',P:'6m 내외의 거리에서 대상을 시각적으로 찾거나 고시할 수 있다.',PM:'6m 거리에서 움직이거나, 빛이 나오거나, 반사하는 속성이 있는 대상을 시각적으로 찾거나 고시할 수 있다. 3~6m 거리에서는 움직이는 속성이 없는 대상을 시각적으로 찾거나 고시할 수 있다. 환경의 복잡성이 원거리 보기에 영향을 계속 미칠 수 있다.',M:'3m 거리에서 대상을 시각적으로 찾거나 고시할 수 있다.'},
+  {R:'수정 없이도, 2차원 자료의 두드러진 특징을 확인한다.',P:'단순한 구성의 도서에서 그림이나 상징을 인식하거나 확인한다.',PM:'2차원의 친숙하고 단순한 자료에 있는 친숙한 요소(특징)을 인식하거나 확인한다.',M:'2차원 자료에 시각적 주의를 기울이지 않는다.'},
+  {R:'다른 사람의 동작을 모방한다.',P:'다른 사람의 동작을 단계적으로 보고 모방한다.',PM:'시각적 그리고 신체적 촉진을 받아 동작을 모방한다.',M:'동작을 모방하지 못한다.'},
+  {R:'현재 환경의 시각 단서에 기초하여 나사건을 예상한다.',P:'과거에 일어난 사람, 장소, 사건을 시각적으로 인식하고 있음을 증명한다.',PM:'반복적인 일과 활동에서 마주하는 사람, 장소, 사건을 시각적으로 인식하고 있음을 증명한다.',M:'반복적인 일과 활동에서 마주하는 행위(actions)나 사건을 시각적으로 인식하지 못한다.'},
+  {R:'사회적 상호작용을 시작하거나 친숙하지 않은 사람들 속에서 소극적인 모습을 보인다.',P:'성인이나 친구의 얼굴 표정이나 제스처에 적절한 감정적·사회적 반응을 보인다.',PM:'친숙한 사람에게 적절한 감정적·사회적 반응을 보인다.',M:'성인이나 친구에게 신뢰할 수 있는 감정적 또는 사회적 반응을 하지 않는다.'},
+  {R:'중심 시야와 주변 시야 영역(방향) 모두 잘 사용한다.',P:'주변 시야 영역(방향)은 모두 잘 사용한다. 몇몇 중심 시야 영역(방향)의 어려움은 복잡성에 영향을 받는다.',PM:'주변 시야에 대한 의존도가 높다. 2차원 자료를 근거리에서 볼 때 주변 시야를 계속 사용한다.',M:'특정 시야 선호를 보인다.'},
+  {R:'대상의 크기 또는 배경의 복잡성에 상관없이, \'시각적으로 안내된 신체 도달\'을 일관되게 한다.',P:'\'시각적으로 안내된 신체 도달\'을 하지만, 대상의 크기도는 배경의 복잡성에 영향을 받는다.',PM:'배경의 복잡성이 감소되어야만 \'시각적으로 안내된 신체 도달\'을 한다.',M:'\'시각적으로 안내된 신체 도달\'을 하는 경우가 드물다.'},
+  {R:'시각적으로 아주 복잡한 배경의 \'수정하지 않은 2차원 자료\'의 두드러진 특징과 세부사항(요소)을 확인할 수 있다.',P:'조금 수정하거나 수정하지 않은 \'연령에 적합한 2차원 자료\'의 두드러진 특징과 세부사항(요소)을 확인할 수 있다.',PM:'복잡성이 낮은 배경의 \'수정한 2차원 자료\'의 두드러진 특징을 확인할 수 있다.',M:'2차원 자료의 두드러진 특징을 확인할 수 없다.'},
+];
+
+var Q_GUIDE = [
+  ['아동에게 친숙한 물체를 선정한다.','다양한 시야 영역에 물체를 제시한다(선호하는 시야를 알고 있다면 선호하는 시야 영역).','시각적 주의를 끌기 위해 물체를 움직이거나 빛을 반사하는 재료를 사용할 수 있다.','물체를 접촉하거나 소리로 단서를 주지 않는다.','아동의 반응을 기다려 준다(시각적 지연을 허용).'],
+  ['다른 물체나 활동을 제공할 때, 머리 위 조명·창문 자연광·발광 물체를 자주 바라보는지 관찰하거나 부모에게 물어본다.','다른 물체나 활동을 제공할 때, 선풍기를 자주 바라보는지 관찰하거나 부모에게 물어본다.'],
+  ['다양한 시야 영역에 친숙한 물체를 제시한다.','물체 위치를 찾거나 바라보는 데 걸리는 시간을 관찰·기록한다.','새로운 물체와 평가 초반·중반·후반 반응을 비교한다.','평소에 물체를 보여 주자마자 알아차리는지 부모에게 물어본다.'],
+  ['아동의 일상·학습 환경에서 관찰한다: 물체·사람에 시각적 주의를 하는가? 빛을 응시하거나 빈 공간을 응시하는가?','교육적 수정이 없는 환경에서 물체나 활동을 제시한다.','조도가 낮고 시각적 혼란이 없는 환경 / 고도로 통제된 환경에서 시각적 행동을 비교한다.'],
+  ['아동이 선호하는 색상의 물체를 제시한다.','아동이 선호하지 않는 색상의 물체를 제시한다.','표면에 여러 색상이나 패턴이 있는 물체를 제시한다.','모든 상황에서 아동의 시각적 주의를 비교한다.'],
+  ['움직이는 속성의 물체(예: 슬링키, 컬러 바람개비)를 제시한다.','반짝이거나 빛을 반사하는 속성의 물체(예: 마일러 재질의 털뭉치)를 제시한다.','선호하는 단일 색상이지만 움직임·반짝임이 없는 물체를 제시한다.','주변 환경의 물체, 선풍기, 사람의 움직임에 시각적 주의를 하는지 관찰한다.','움직임에 시각적 주의를 하는지 부모에게 물어본다.'],
+  ['시각적으로 대상을 감지·주의할 수 있는 일반적·최대 거리를 부모에게 물어본다.','최대 150cm 이내의 다양한 거리에서 선호하는 물체를 제시한다.','친숙한 대상에 시각적 반응이 일어나는 거리와 비교한다.'],
+  ['말하거나 예고하지 않고 아동 양 눈 사이 콧대를 빠르게 살짝 접촉한다.','말하거나 예고하지 않고 아동 얼굴을 향해 손을 빠르게 갖다 댄다.','즉시 눈을 깜박이는지, 늦게 깜박이는지, 깜박이지 않는지 관찰한다.'],
+  ['거울에 비친 자기 얼굴이나 친숙한 사람 얼굴을 쳐다보는지 부모와 교사에게 물어본다.','친숙한 사람·낯선 사람·자기 거울 이미지를 대면하게 될 때 아동의 반응을 관찰한다.','말을 하는 사람과 말을 하지 않는 사람의 얼굴에 대한 반응을 비교한다.'],
+  ['낮은 수준의 청각·시각·촉각 자극이 있을 때 목표 물체에 눈 맞춤을 하는지 관찰한다.','선호하는 물체를 제시한 후 낮은 수준의 청각 자극을 추가할 때 시각적 반응을 관찰한다.','엄격히 통제된 환경에서 물체를 제시한 후 낮은 조명이나 환경음을 추가할 때 반응을 비교한다.'],
+  ['주요 광원에서 시각적 주의를 다른 물체로 돌릴 수 있는지 관찰한다.','부모에게 아동이 빛을 쳐다보는지 물어본다.','빛이 발생하는 물체와 그렇지 않은 물체를 아동에게 제시한다.','컬러 필터가 부착된 손전등을 아동 얼굴에 비추어도 눈을 감지 않는지 확인한다.'],
+  ['대상을 제시하는 시점과 처음 시각적 반응을 보이는 시점 간에 지연 여부를 관찰한다.','평가 초반과 일정 시간이 지난 후 시각적 반응을 비교한다.','평가 이후 반응 시간이 이전보다 약간 감소하는지 확인한다.'],
+  ['아동이 이미 알고 있는 친숙한 물체를 제시한다.','친숙한 물체와 유사한 특성의 새로운 물체를 제시한다.','새로운 물체를 처음 보여 줄 때와 몇 번 본 이후의 반응을 비교한다.'],
+  ['말하거나 예고하지 않고 아동 양 눈 사이 콧대를 빠르게 살짝 접촉한다.','말하거나 예고하지 않고 아동 얼굴을 향해 손을 빠르게 갖다 댄다.','즉시·지연·불일관하게 눈을 깜박이는지, 또는 깜박이지 않는지 관찰한다.'],
+  ['아동이 가장 좋아하는 물체를 부모와 교사에게 물어본다.','아동이 색상에 따라 물체를 다르게 반응하는지 관찰한다.','다양한 색상의 물체를 제시하여 선호하는 색상이 있는지 확인한다.'],
+  ['수정된 대면 시야 검사를 실시한다.','아동의 뒤에 서서 우측·좌측·상측·하측 시야 영역으로 빛이 나오는 물체를 움직인다.','아동이 물체를 감지하면 손이나 눈으로 반응하는지 확인한다.','특정 시야 영역에서만 반응하는지 확인한다.'],
+  ['친숙한 물체를 아동으로부터 60~90cm 이내의 다양한 거리에서 제시한다.','움직이는 속성이 있는 물체와 없는 물체에 대한 시각적 주의를 비교한다.','아동이 물체를 시각적으로 감지할 수 있는 거리를 확인한다.'],
+  ['선호하는 물체를 제시하는 동안 물체를 바라보면서 동시에 손을 뻗어 접촉하는지 관찰한다.','아동이 물체를 바라보고 시선을 돌린 후 손을 뻗는지(순차적) 확인한다.','단순한 배경과 복잡한 배경에서 행동에 차이가 있는지 비교한다.'],
+  ['아동에게 2~3가지 색상으로 된 물체를 제시한다.','1가지 색상 물체와 2~3가지 색상 물체에 대한 시각적 주의를 비교한다.','다양한 색상의 물체에 동일하게 시각적 주의를 하는지 확인한다.'],
+  ['천장 조명이나 창문 빛을 통제·조절한다.','빛을 반사하거나 조명이 있는 물체와 그렇지 않은 물체를 제시한다.','아동이 빛이 없는 물체에도 시각적 주의를 하는지 확인한다.'],
+  ['평가 이전·도중·이후에 아동의 시각적 반응을 비교한다.','아동이 피곤하거나 스트레스를 받거나 과도한 자극을 받을 때 시각적 지연이 나타나는지 관찰한다.','다양한 상황에서 시각적 지연이 일어나는 조건을 확인한다.'],
+  ['선호하는 물체 또는 친숙한 물체를 제시한다.','물체를 움직이게 하거나 멈추게 할 때 아동의 시각적 주의 변화를 관찰한다.','움직이는 물체에 더 많은 시각적 주의를 하는지 확인한다.'],
+  ['배경 소음(예: 음악, TV 소리)이 있는 환경에서 물체를 제시한다.','소음이 있을 때와 없을 때 아동의 시각적 주의를 비교한다.','작은 소음이 시각적 주의를 방해하는지 확인한다.'],
+  ['말하거나 예고하지 않고 아동 양 눈 사이 콧대를 빠르게 살짝 접촉한다.','즉시 눈을 깜박이는지 확인한다.','안면 접촉에 대한 눈 깜박임이 일관되게 나타나는지 확인한다.'],
+  ['말하거나 예고하지 않고 아동 얼굴을 향해 손을 빠르게 갖다 댄다.','시각적 위협에 간헐적으로 눈을 깜박이는지 확인한다.','여러 번 반복하여 일관성을 확인한다.'],
+  ['아동이 물체를 시각적으로 감지하거나 주의할 수 있는 거리를 부모에게 물어본다.','120~180cm 거리에서 다양한 물체를 제시한다.','움직이는 물체와 정지한 물체에 대한 반응 거리를 비교한다.'],
+  ['말소리가 없을 때 친숙한 사람 얼굴을 바라보는지 부모와 교사에게 물어본다.','말을 하지 않는 친숙한 사람이 아동 앞에 있을 때 반응을 관찰한다.','말을 하는 사람과 말을 하지 않는 사람의 얼굴에 대한 반응을 비교한다.'],
+  ['친숙한 물체를 제시한다.','친숙한 물체와 새로운 물체에 대한 시각적 주의를 비교한다.','워밍업(1~2회 노출) 이후 새로운 물체에 시각적 주의를 하는지 확인한다.'],
+  ['배경 소음이 있는 환경에서 물체를 제시한다.','청각 자극의 강도를 다양하게 변화시키면서 물체를 제시한다.','청각 자극이 있을 때 물체에 시각적 주의를 유지하는지 확인한다.'],
+  ['말하거나 예고하지 않고 아동 얼굴을 향해 손을 빠르게 갖다 댄다.','시각적 위협에 일관되게 눈을 깜박이는지 확인한다.','여러 번 반복하여 일관성을 확인한다.'],
+  ['대상을 제시하는 시점과 처음 시각적 반응 시점 간에 지연 여부를 관찰한다.','피로하거나 배고프거나 스트레스를 받을 때 지연이 나타나는지 확인한다.','대부분의 상황에서 지연 없이 물체를 바라보는지 확인한다.'],
+  ['아동으로부터 최대 3m 거리에서 움직이는 물체를 제시한다.','움직이는 물체와 정지한 물체에 대한 시각적 주의 거리를 비교한다.','다양한 조명 환경에서 시각적 주의 거리를 확인한다.'],
+  ['다양한 복잡성·패턴이 있는 배경에서 친숙한 물체를 제시한다.','검은색 배경에서 시작하여 더 복잡한 배경으로 복잡성을 증가시킨다.','아동이 근거리에서 물체를 찾을 수 있는지 확인한다. 찾지 못하면 배경을 움직이거나 반짝이는 재료를 사용한다.'],
+  ['말 없이 예고 없이 다가갈 때 상대방 얼굴을 알아차리는지 부모와 교사에게 물어본다.','모르는 사람이 다가갈 때 아동의 반응을 부모와 교사에게 물어본다.','친숙한 사람·낯선 사람·자기 거울 이미지와 마주할 때 시각적 행동을 관찰한다.'],
+  ['아동이 거울에 비친 자기 이미지를 좋아하는지 부모와 교사에게 물어본다.','아동 얼굴로부터 45~60cm 떨어진 거리에 거울을 놓는다.','자기 얼굴 이미지를 쳐다보는지, 손을 뻗어 접촉하는지, 미소 짓는지, 표정을 바꾸어 보는지 확인한다.'],
+  ['아동이 가장 좋아하는 물체의 색상·패턴을 부모와 교사에게 물어본다.','가정이나 교실에서 환경과의 상호작용을 관찰한다.','단색·2가지 색상·다양한 색상을 가진 물체를 제시하고 동일하게 바라보는지 확인한다.'],
+  ['아동이 책이나 2차원 자료에 시각적 주의를 하는지 부모와 교사에게 물어본다.','1~2개의 이미지로 구성된 페이지를 바라보는지 관찰한다.','검은색 배경과 컬러 배경에 단색의 상징을 제시하고 배경이 달라져도 동일한 상징을 찾을 수 있는지 확인한다.'],
+  ['새로운 물체가 제시될 때 아동이 어떻게 반응하는지 부모와 교사에게 물어본다.','연령에 적합한 다양한 새로운 물체를 제시한다.','아동이 새로운 물체를 시각적으로 조사하고 두드러진 특징을 탐색하는지 확인한다.'],
+  ['새롭고 복잡한 환경에서 아동의 시각적 행동이 달라지는지 부모와 교사에게 물어본다.','새로운 환경·복잡한 환경에서 관찰한다: 부자연스러운 속도로 이동하는가? 시각적 호기심을 보이지 않는가?','친숙한 물체와 새로운 물체를 무작위로 제시하고 물체를 찾을 수 있는지 확인한다.'],
+  ['대상이 제시되는 시점과 처음 대상을 찾아 바라보는 시점 간에 지연이 있었는지 부모와 교사에게 물어본다.','다양한 환경과 시간대에 시각적 지연 반응을 관찰한다.','배고픔·피로·여러 감각 자극이 있을 때 지연을 보이는지 확인한다.'],
+  ['아동이 가장 시각적 주의를 기울이거나 좋아하는 물체·자료를 부모와 교사에게 물어본다.','선호하는 자료들이 패턴·복잡성·색상에 있어 유사한 점이 있는지 확인한다.','다양한 자료를 제시하여 3차원 물체와 2차원 자료에서 동일한 이미지를 찾을 수 있는지 확인한다.'],
+  ['아동이 물체를 일관되게 찾을 수 있는 최대 거리를 부모와 교사에게 물어본다.','다양한 환경에서 대상을 시각적으로 인식·찾을 수 있는 거리를 관찰한다.','아동으로부터 3~9m 거리에 친숙한 물체(최대 10cm)를 놓고 찾을 수 있는 최대 거리를 확인한다.'],
+  ['아동이 친숙한 책과 새로운 책에서 특정 이미지를 확인할 수 있는지 부모와 교사에게 물어본다.','1~3개 이상의 이미지가 있는 배열에서 교사가 말한 이미지를 찾거나 손으로 가리키는지 관찰한다.','최대 10개의 이미지가 있는 페이지를 제시하고 동일 이미지 찾기·이름 듣고 찾기·이미지 이름 말하기를 확인한다.'],
+  ['아동이 다른 사람의 동작을 보고 따라할 수 있는지 부모와 교사에게 물어본다.','아동이 다른 사람의 동작을 모방하는지 관찰한다(예: 손 흔들기, 노래 율동 따라하기).','구두 설명 없이 몸짓(제스처)을 보여 주고 아동에게 따라 하도록 요구한다.'],
+  ['아동이 주변의 장소·사건·활동을 시각적으로 인식하는지 부모와 교사에게 물어본다.','친숙한 장소·사건·활동에 접근하거나 시작할 때 아동의 반응을 관찰한다.','상황에 맞게 시각적 인식·즐거움·괴로움 등의 신호를 표현하는지 확인한다.'],
+  ['친숙한 사람과 낯선 사람이 있을 때 아동이 어떻게 반응하는지 부모와 교사에게 물어본다.','다양한 환경에서 성인이나 또래와 함께 있을 때 아동의 행동을 관찰한다.','웃는·찡그린·우는 얼굴 표정의 사진 이미지를 제시하고 표정에 따라 다른 반응을 보이는지 확인한다.'],
+  ['연석·계단·단차·모퉁이·장애물에서 보행 어려움을 보이는지 부모와 교사에게 물어본다.','수정된 대면 시야 검사를 실시한다: 아동 뒤에 서서 사방향 시야 영역으로 빛이 나오는 물체를 움직인다.','낯선 환경(계단·장애물이 있는)에서 발을 잘못 디디거나 장애물과 충돌하는지 확인한다.'],
+  ['아동이 대상을 바라보면서 동시에 손을 뻗어 접촉하는지 부모와 교사에게 물어본다.','단순·복잡한 배경에서 다양한 크기의 물체를 제시하고 바라보기와 손 뻗기의 차이를 확인한다.','물체를 바라보고 시선을 돌린 후 손을 뻗는지(순차적) 확인한다.'],
+  ['세부 수준·이미지 개수·배경 복잡성에 따라 자료 사용에 어려움이 있는지 부모와 교사에게 물어본다.','새로운 상징·사진·삽화·이미지를 선택하여 아동을 관찰한다.','복잡한 배열에서 특정 물체 찾기·이미지 이름 말하기·같은 범주 이미지 분류하기 등을 확인한다.']
+];
+
+function showScale2(){
+  // Build scale 2 items
+  var container = document.getElementById('sc2-items');
+  container.innerHTML = '';
+  SC2_ITEMS.forEach(function(item, i){
+    var card = document.createElement('div');
+    card.style.cssText = 'background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:0 2px 12px rgba(26,74,107,.08)';
+    var scoreHtml = SC2_SCORES.map(function(sc, si){
+      var sel = S.sc2ans[i] === sc;
+      var hasInfo = SC2_INFO[i] && SC2_INFO[i].rows[si];
+      var infoIcon = '';
+      return '<div data-idx="'+i+'" data-sc="'+sc+'" style="flex:1;position:relative;padding:8px 4px;border-radius:8px;border:2px solid '+(sel?SC2_COLORS[si]:'#e2e8f0')+';background:'+(sel?SC2_COLORS[si]:'#f8fafc')+';text-align:center;cursor:pointer;transition:all .15s">'
+        +'<div style="font-size:13px;font-weight:800;color:'+(sel?'#fff':SC2_COLORS[si])+'">'+SC2_LABELS[si]+'</div>'
+        +infoIcon
+        +'</div>';
+    }).join('');
+    var viewLink = SC2_INFO[i]
+      ? '<div style="text-align:right;margin-top:8px"><button onclick="showSc2Info('+i+')" style="padding:4px 11px;border-radius:20px;border:none;background:rgba(61,184,160,.12);color:#3db8a0;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">ⓘ 점수기준보기</button></div>'
+      : '';
+    card.innerHTML = '<div style="font-size:14px;font-weight:600;color:#1a2332;margin-bottom:10px">'+item+'</div>'
+      +'<div style="display:flex;gap:6px" class="sc2-score-row">'+scoreHtml+'</div>'
+      +viewLink;
+    // Add click listeners
+    card.querySelectorAll('[data-idx]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var idx2 = parseInt(btn.getAttribute('data-idx'));
+        var sc = parseFloat(btn.getAttribute('data-sc'));
+        S.sc2ans[idx2] = sc;
+        // Re-render this card's buttons
+        var row = btn.parentElement;
+        row.querySelectorAll('[data-idx]').forEach(function(b, si){
+          var bsc = parseFloat(b.getAttribute('data-sc'));
+          var isSel = bsc === sc;
+          b.style.borderColor = isSel ? SC2_COLORS[si] : '#e2e8f0';
+          b.style.background  = isSel ? SC2_COLORS[si] : '#f8fafc';
+          b.querySelector('div').style.color = isSel ? '#fff' : SC2_COLORS[si];
+        });
+      });
+    });
+    container.appendChild(card);
+  });
+  showScreen('sc-scale2');
+}
+
+document.getElementById('btn-sc2-back').addEventListener('click',function(){
+  showScreen('sc-q');
+  document.getElementById('mo-lv-result').classList.add('show');
+});
+
+document.getElementById('btn-sc2-done').addEventListener('click',function(){
+  // Validate all 10 items answered
+  var unanswered=[];
+  for(var i=0;i<10;i++){
+    if(S.sc2ans[i]===null) unanswered.push(i+1);
+  }
+  if(unanswered.length>0){
+    toast(unanswered.length===1
+      ? unanswered[0]+'번 문항을 체크해주세요'
+      : unanswered.join(', ')+'번 문항을 체크해주세요');
+    return;
+  }
+  showResult();
+});
+
+function showResult(){
+  var ds=new Date(S.date).toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('r-sub').textContent=S.name+' · '+ds;
+
+  document.getElementById('r-meta').innerHTML=
+    '<div class="mr"><span class="ml">아동 이름</span><span class="mv">'+S.name+'</span></div>'+
+    '<div class="mr"><span class="ml">평가일</span><span class="mv">'+ds+'</span></div>'+
+    '<div class="mr"><span class="ml">평가자</span><span class="mv">'+S.ev+'</span></div>'+
+    '<div class="mr"><span class="ml">평가척도 1</span><span class="mv">Lv.'+S.finalLv+' &nbsp;|&nbsp; '+(S.stopped||QS.length)+'문항'+(S.stopped?' (중단)':'')+'</span></div>'+
+    '<div class="mr"><span class="ml">평가척도 2</span><span class="mv" style="font-weight:800;color:var(--primary)">'+calcSc2Total()+'점 / 10점</span></div>'+'<div class="mr"><span class="ml" style="font-size:13px;font-weight:800">최종 CVI Phase</span>'+
+    '<span class="mv" style="font-size:16px;font-weight:900;color:var(--primary)">'+(function(){
+    var p1=parseFloat(S.finalLv)||0;
+    var p2=calcSc2Total();
+    function gp(v){return v<=3?1:v<=7?2:3;}
+    var pm=Math.min(gp(p1),gp(p2)),px=Math.max(gp(p1),gp(p2));
+    return pm===px?'Phase '+pm:'Phase '+pm+'~'+px;
+  }())+'</span></div>';
+
+  // ── DISTRIBUTION CHART ──────────────────────────────────────
+  var chartEl=document.getElementById('r-chart');
+  if(chartEl){
+    var sc1val=parseFloat(S.finalLv)||0;
+    var sc2val=calcSc2Total();
+
+    function pct(v){ return Math.min(Math.max(v/10*100,0),100); }
+
+    // Determine phase for a value
+    function getPhase(v){
+      if(v<=3) return 1;
+      if(v<=7) return 2;
+      return 3;
+    }
+    var p1=getPhase(sc1val), p2=getPhase(sc2val);
+    var phaseMin=Math.min(p1,p2), phaseMax=Math.max(p1,p2);
+    var phaseLabel = phaseMin===phaseMax ? 'Phase '+phaseMin : 'Phase '+phaseMin+'~'+phaseMax;
+
+    var phases=[
+      {label:'Phase 1',from:0,to:3,  bg:'#fde8ef',tc:'#e05a7a'},
+      {label:'Phase 2',from:3,to:7,  bg:'#fef9ec',tc:'#b07d1a'},
+      {label:'Phase 3',from:7,to:10, bg:'#edf7f5',tc:'#27856f'},
+    ];
+
+    // Phase segments
+    var segs=phases.map(function(p){
+      var w=(p.to-p.from)/10*100;
+      var left=p.from/10*100;
+      return '<div style="position:absolute;left:'+left+'%;width:'+w+'%;height:100%;background:'+p.bg+'">'
+        +'<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:9px;font-weight:800;color:'+p.tc+';white-space:nowrap;opacity:.8">'+p.label+'</div>'
+        +'</div>';
+    }).join('');
+
+
+
+    var x1=pct(sc1val), x2=pct(sc2val);
+
+    // Markers ON the bar
+    function markerOnBar(val,label,color,topPx){
+      var tp = topPx||0;
+      return '<div style="position:absolute;left:'+pct(val)+'%;top:'+tp+'px;transform:translateX(-50%);z-index:10">'
+        +'<div style="position:relative;display:flex;flex-direction:column;align-items:center">'
+        +'<div style="width:14px;height:14px;border-radius:50%;background:'+color+';border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.3)"></div>'
+        +'<div style="margin-top:2px;background:'+color+';color:#fff;font-size:9px;font-weight:800;padding:1px 6px;border-radius:4px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.2)">'+label+'</div>'
+        +'</div>'
+        +'</div>';
+    }
+
+    chartEl.innerHTML=
+      '<div style="background:#fff;border-radius:14px;padding:18px 16px 22px;box-shadow:0 4px 20px rgba(26,74,107,.1)">'
+
+      // Title + Phase result
+      +(function(){
+        var phaseKey=phaseLabel.replace('Phase ','');
+        var phaseColorMap={'1':'#e05a7a','2':'#e8a838','3':'#3db8a0','1~2':'#e8a838','2~3':'#3db8a0','1~3':'#7c5cbf'};
+        var phaseColor=phaseColorMap[phaseKey]||'#1a4a6b';
+        var phaseGrad={'1':'linear-gradient(135deg,#e05a7a,#f07090)','2':'linear-gradient(135deg,#e8a838,#f0b830)','3':'linear-gradient(135deg,#3db8a0,#2d9e8a)','1~2':'linear-gradient(135deg,#e05a7a,#e8a838)','2~3':'linear-gradient(135deg,#e8a838,#3db8a0)','1~3':'linear-gradient(135deg,#e05a7a,#e8a838,#3db8a0)'};
+        var grad=phaseGrad[phaseKey]||'linear-gradient(135deg,#1a4a6b,#2d8ecf)';
+        return '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">'
+          +'<div style="font-size:12px;font-weight:800;color:#1a2332;display:flex;align-items:center;gap:7px">'
+          +'<div style="width:10px;height:10px;border-radius:50%;background:#6366f1"></div>전반적인 기능적 시각 수준 평가</div>'
+          +'<div style="background:'+grad+';color:#fff;font-size:11px;font-weight:800;padding:5px 14px;border-radius:50px;box-shadow:0 2px 10px rgba(0,0,0,.2);white-space:nowrap">'
+          +'CVI Phase: '+phaseLabel+'</div>'
+          +'</div>';
+      }())
+
+      // Bar with Phase labels (taller bar so labels fit)
+      +'<div style="position:relative;height:44px;border-radius:8px;overflow:hidden;border:1px solid #e2e8f0;margin-bottom:8px">'
+      +'<div style="position:absolute;inset:0;display:flex;">'+segs+'</div>'
+      +'</div>'
+
+      // Tick + markers row (below bar, overlapping)
+      +'<div style="position:relative;height:44px;margin-bottom:10px">'
+      // Connecting line between marker dots - solid line
+      +'<div style="position:absolute;top:21px;left:'+Math.min(x1,x2)+'%;width:'+Math.abs(x2-x1)+'%;height:2px;background:linear-gradient(90deg,#1a4a6b,#e05a7a);border-radius:2px;z-index:5"></div>'
+      // Tick marks
+      +[0,1,2,3,4,5,6,7,8,9,10].map(function(t){
+        return '<div style="position:absolute;left:'+pct(t)+'%;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center">'
+          +'<div style="width:1px;height:6px;background:#cbd5e1"></div>'
+          +'<div style="font-size:10px;color:#94a3b8;font-weight:'+(t%5===0?700:400)+'">'+t+'</div>'
+          +'</div>';
+      }).join('')
+      // Marker dots + labels
+      +markerOnBar(sc1val,'척도1(범위) Lv.'+S.finalLv,'#1a4a6b',18)
+      +markerOnBar(sc2val,'척도2(수준) '+sc2val+'점','#e05a7a',18)
+      +'</div>'
+
+      // Legend
+      +'<div style="display:flex;gap:14px;flex-wrap:wrap">'
+      +'<div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#64748b"><div style="width:10px;height:10px;border-radius:50%;background:#1a4a6b;border:1.5px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>척도1(범위) · CVI Range Lv.'+S.finalLv+'</div>'
+      +'<div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#64748b"><div style="width:10px;height:10px;border-radius:50%;background:#e05a7a;border:1.5px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>척도2(수준) · '+sc2val+'점 / 10점</div>'
+      +'</div>'
+      +'</div>';
+  }
+
+    var list=document.getElementById('r-list');
+  list.innerHTML='';
+  var lastQ=S.stopped||QS.length;
+
+  LEVELS.forEach(function(lv){
+    if(lv.range[0]>lastQ)return;
+    var sec=document.createElement('div');
+    sec.className='rs';
+    sec.innerHTML='<div class="rsh" style="justify-content:space-between"><div style="display:flex;align-items:center;gap:8px"><div class="rsd" style="background:'+lv.color+'"></div>'+
+      '<span>평가척도 1 - '+lv.label+' <span style="font-weight:700;color:var(--muted)">: '+lv.desc+'</span></span></div>'+
+      '<span style="background:'+lv.color+';color:#fff;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0">Lv.'+S.finalLv+'</span></div>';
+    var end=Math.min(lv.range[1],lastQ);
+    for(var n=lv.range[0];n<=end;n++){
+      var a=S.ans[n-1];
+      var ri=RATS.find(function(r){return r.key===a.rat;})||{};
+      var oidS=a.oid.length?a.oid.join(', '):'미선택';
+      var row=document.createElement('div');
+      row.className='rrow';
+      row.innerHTML=
+        '<div class="rn">'+n+'</div>'+
+        '<div style="flex:1"><div class="rq">'+QS[n-1]+'</div><div class="roi">수집방법: '+oidS+(a.comment?'&nbsp;·&nbsp;<span style="color:#1a4a6b">코멘트 있음</span>':'')+'</div>'+(a.comment?'<div style="font-size:12px;color:#475569;margin-top:4px;background:#f8fafc;border-radius:6px;padding:5px 8px;line-height:1.5">'+a.comment+'</div>':'')+'</div>'+
+        '<div><div class="rbadge" style="background:'+(ri.bg||'#f3f4f6')+';color:'+(ri.color||'#666')+';border-color:'+(ri.br||'#ccc')+'">'+(a.rat||'-')+'</div></div>';
+      sec.appendChild(row);
+    }
+    list.appendChild(sec);
+  });
+
+  // Render Scale 2 results
+  var sc2el = document.getElementById('r-sc2');
+  if(sc2el){
+    var sc2rows = SC2_ITEMS.map(function(item, i){
+      var v = S.sc2ans[i];
+      var si = SC2_SCORES.indexOf(v);
+      var color = si>=0 ? SC2_COLORS[si] : '#94a3b8';
+      var label = v!==null ? SC2_LABELS[SC2_SCORES.indexOf(v)] : '-';
+      return '<div style="background:#fff;border-radius:10px;padding:11px 14px;margin-bottom:5px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 6px rgba(26,74,107,.07)">'
+        +'<div style="flex:1;font-size:13px;color:#1a2332">'+item+'</div>'
+        +'<div style="font-size:14px;font-weight:800;color:'+color+';background:'+(si>=0?SC2_COLORS[si]+'22':'#f3f4f6')+';border-radius:6px;padding:3px 10px;min-width:40px;text-align:center">'+label+'</div>'
+        +'</div>';
+    }).join('');
+    sc2el.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;font-size:13px;font-weight:700;color:#1a2332">'
+      +'<div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:#7c5cbf"></div>'
+      +'<span>평가척도 2 <span style="font-weight:400;color:#64748b">— CVI 고유 특성 영향 평가</span></span></div>'
+      +'<span style="background:#7c5cbf;color:#fff;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0">'+calcSc2Total()+'점 / 10점</span>'
+      +'</div>'
+      +sc2rows;
+  }
+
+  showScreen('sc-result');
+}
+
+// ── PDF ───────────────────────────────────────────────────────────
+document
+
+// PHASE GUIDE
+var PHASE_GUIDE = {
+  '1': '<div style="margin-top:16px;border-top:2px solid #e05a7a22;padding-top:14px">' +
+    '<div style="font-size:13px;font-weight:800;color:#e05a7a;margin-bottom:10px">1) 1단계 아동의 목표와 특징</div>' +
+    '<div style="font-size:12px;font-weight:700;color:#1a2332;margin-bottom:4px">목표</div>' +
+    '<p style="font-size:11.5px;color:#475569;line-height:1.8;margin-bottom:10px">아동을 위한 중재는 시각적 행동구축(Building visual behavior)에 중점을 둔다. 모든 중재활동은 시각을 거의 사용하지 않는 CVI 아동이 특정 물체만이라도 일관되게 볼 수 있도록 하는 데 목적을 둔다. CVI 1단계 아동은 주로 대상의 움직임과 위치를 탐지/발견하는 것과 관련되는 어디(where) 시스템이라 부르는 등쪽 경로 시각시스템에 의존한다. 등쪽 경로 시각 시스템은 CVI 1단계에서 가장 활성화되므로 이 단계의 아동은 빛, 움직임을 향해 고개나 몸을 돌릴 수 있지만 눈과 물체 간에 시각적 고시가 이루어지지 못한다.</p>' +
+    '<div style="font-size:12px;font-weight:700;color:#1a2332;margin-bottom:6px">(1) CVI 1단계 교수와 조정</div>' +
+    '<ul style="margin:0 0 10px 16px;padding:0;font-size:11.5px;color:#475569;line-height:1.9">' +
+    '<li>아동이 가장 좋아하는 물체인 Big bird 인형과 같은 노란색 물체를 활용한다.</li>' +
+    '<li>아동이 선호하는 우측 시야 영역에 물체를 제시하거나 모빌처럼 매달아서 움직이게 한다.</li>' +
+    '<li>아동의 시각적 지연을 허용하고 최대 60초 정도 추가로 기다려 준다.</li>' +
+    '<li>소리가 나지 않는 장난감이나 물체를 활용한다.</li>' +
+    '</ul>' +
+    '<div style="font-size:12px;font-weight:700;color:#1a2332;margin-bottom:4px">(2) 환경중재</div>' +
+    '<p style="font-size:11.5px;color:#475569;line-height:1.8;margin-bottom:6px">이 점수 범위의 CVI 아동은 CVI의 고유한 특성들로부터 영향을 매우 많이 받기 때문에 시각적 주의를 산만하게 만드는 요소들은 주변 환경에서 제거해야 하며, 다른 감각정보(청각 등)가 있는지를 주의 깊게 확인하여 통제해야만 CVI 아동이 대상에 시각적 주의를 기울일 수 있다.</p>' +
+    '<ul style="margin:0 0 10px 16px;padding:0;font-size:11.5px;color:#475569;line-height:1.9">' +
+    '<li>단색의 물체</li><li>선호하는 색상의 물체</li>' +
+    '<li>반짝이거나 빛을 반사하거나 움직이는 속성의 물체</li>' +
+    '<li>단순한 배경에 제시되는 물체</li><li>평소 친숙한 물체</li>' +
+    '<li>슬링키, 빛을 반사하는 재료로 만든 바람개비</li>' +
+    '</ul>' +
+    '<div style="font-size:12px;font-weight:700;color:#1a2332;margin-bottom:6px">(3) 고려사항</div>' +
+    '<ul style="margin:0 0 4px 16px;padding:0;font-size:11.5px;color:#475569;line-height:1.9">' +
+    '<li>시각적 지연 및 특정 시야 선호 특성들과 관련된 시각문제가 있는지 평가</li>' +
+    '<li>너무 많은 시각정보가 포함되어 있지 않은지 확인</li>' +
+    '<li>아동의 신체자세를 고려해야 한다. (에너지를 시각정보가 아니라 신체자세에 쓰는 건 아닌지)</li>' +
+    '<li>아동이 스트레스(딸꾹질, 하품, 시선회피, 찡그린 얼굴표정, 고음발성)를 받거나 피로를 느끼고 있는지 고려해야 한다.</li>' +
+    '</ul>' +
+    '</div>',
+
+  '2': '<div style="margin-top:16px;border-top:2px solid #e8a83822;padding-top:14px">' +
+    '<div style="font-size:13px;font-weight:800;color:#b07d1a;margin-bottom:10px">2) 2단계 아동의 목표와 특징</div>' +
+    '<div style="font-size:12px;font-weight:700;color:#1a2332;margin-bottom:4px">목표</div>' +
+    '<p style="font-size:11.5px;color:#475569;line-height:1.8;margin-bottom:10px">중재목표는 시각과 기능의 통합(Integrating vision with function)에 중점을 둔다. 2단계로 진행하게 되면 CVI 아동이 특정 대상을 바라보거나 손을 뻗어서 자신의 바램이나 요구를 나타내는 데 시각을 사용하기 시작한다. 2단계 아동은 모든 활동에서 몇 가지 물체를 작동하거나 조작하는 데 시각을 사용할 만큼 일관되게 바라보는 시각적 행동이 관찰된다. 2단계 아동은 더 이상 수동적으로 바라보지 않고, 능동적으로 물체에 대한 행위나 시각적 반응을 할 수 있다. CVI 아동의 눈과 물체 간에 눈맞춤을 보여주는 시각 능력은 배쪽 경로 시각시스템인 무엇(what) 시스템의 활성화를 통해 이루어진다. 2단계의 아동은 시각적 주의를 적절한 언어 및 비교 사고와 연결하도록 지원하는 것이 필요하다.</p>' +
+    '<div style="font-size:12px;font-weight:700;color:#1a2332;margin-bottom:6px">(1) CVI 2단계 교수와 조정</div>' +
+    '<ul style="margin:0 0 10px 16px;padding:0;font-size:11.5px;color:#475569;line-height:1.9">' +
+    '<li>아동이 선호하는 노란색으로 강조표시한 물체를 활용한다.</li>' +
+    '<li>아동이 선호하는 우측 또는 좌측 시야 영역에 물체를 제시하고 물체를 살짝 움직여 준다.</li>' +
+    '<li>아동의 시각적 지연을 허용하고 15~30초 정도 추가로 기다려 준다.</li>' +
+    '<li>작은 소리가 나는 물체를 활용한다.</li>' +
+    '</ul>' +
+    '<div style="font-size:12px;font-weight:700;color:#1a2332;margin-bottom:4px">(2) 환경중재</div>' +
+    '<p style="font-size:11.5px;color:#475569;line-height:1.8;margin-bottom:10px">CVI 아동은 일반적으로 작은 소리의 청각 자극이나 친숙한 청각자극이 있더라도 교사가 제시하는 시각 자극과 정보에 시각적 주의를 기울일 수 있다.</p>' +
+    '<div style="font-size:12px;font-weight:700;color:#1a2332;margin-bottom:6px">(3) 고려사항</div>' +
+    '<ul style="margin:0 0 4px 16px;padding:0;font-size:11.5px;color:#475569;line-height:1.9">' +
+    '<li>복잡성을 계속 통제해 주는 것이 필요하지만 아동이 CVI 2단계로 진행하면서 더 많은 패턴이 있는 3차원 물체도 보고 해석할 수 있다.</li>' +
+    '<li>빛을 응시하는 행동은 일반적으로 CVI 2단계에서 해결이 된다.</li>' +
+    '<li>CVI 1단계에서 사용했던 반짝이거나 빛을 반사하는 속성의 재료를 CVI 2단계에서 사용할 물체에 적용할 수 있다.</li>' +
+    '<li>검은색 배경이나 단순한 배경에 물체를 제시하면 시각적으로 안내된 신체 도달을 촉진할 수 있다.</li>' +
+    '<li>아동에게 친숙하거나 좋아하는 물체의 특징을 고려하여 중재에 사용할 새로운 물체를 선정할 수 있다.</li>' +
+    '</ul>' +
+    '</div>',
+
+  '3': '<div style="margin-top:16px;border-top:2px solid #3db8a022;padding-top:14px">' +
+    '<div style="font-size:13px;font-weight:800;color:#27856f;margin-bottom:10px">3) CVI 3단계 교수와 조정</div>' +
+    '<div style="font-size:12px;font-weight:700;color:#1a2332;margin-bottom:4px">목표</div>' +
+    '<p style="font-size:11.5px;color:#475569;line-height:1.8;margin-bottom:10px">중재목표는 고유한 특성들의 정교한 개선에 중점을 둔다. 복잡한 배열 속에 제시된 대상과 두드러진 세부사항을 확인하도록 돕는 세부적인 시각적 주의가 이루어진다. 3단계 아동은 어느 정도 시각 기능을 사용할 수 있으므로 주변 사람들이 아동이 CVI 아동인지를 쉽게 알아차리지 못할 수 있다. 그렇더라도 3단계 아동은 여전히 평가를 통해 기능 시각 사용 능력과 시각 지원의 요구를 계속 확인하고 맞춤형 중재를 제공해야 한다.</p>' +
+    '<div style="font-size:12px;font-weight:700;color:#1a2332;margin-bottom:6px">(1) CVI 3단계 교수와 조정</div>' +
+    '<ul style="margin:0 0 10px 16px;padding:0;font-size:11.5px;color:#475569;line-height:1.9">' +
+    '<li>아동이 선호하는 색상으로 2차원 상징의 윤곽선을 그려 강조 표시한다.</li>' +
+    '<li>하측 시야 영역을 제외한 나머지 시야 영역들에 자료를 제시한다.</li>' +
+    '<li>발작이 일어난 후에는 시각적 지연을 허용하고 기다려 준다.</li>' +
+    '<li>물체, 환경, 사람들의 두드러진 특징을 교육한다.</li>' +
+    '</ul>' +
+    '<div style="font-size:12px;font-weight:700;color:#1a2332;margin-bottom:4px">(2) 환경중재</div>' +
+    '<p style="font-size:11.5px;color:#475569;line-height:1.8;margin-bottom:10px">이 점수 범위의 아동은 CVI의 고유한 특성들의 상당수가 해결되었으며 원거리 보기의 어려움, 시각적 복잡성의 어려움, 시각-운동수행의 어려움이 남아 있을 수 있다. CVI 3단계 아동에게 시각적 주의를 기울이도록 특별한 환경 수정을 요구하지 않을 정도로 기능시각이 발달한다. 다만 책 같은 2차원 자료의 경우에는 대비를 높이고 복잡성을 줄여주는 간단한 수정들이 계속 필요할 수 있다.</p>' +
+    '<div style="font-size:12px;font-weight:700;color:#1a2332;margin-bottom:6px">(3) 고려사항</div>' +
+    '<ul style="margin:0 0 4px 16px;padding:0;font-size:11.5px;color:#475569;line-height:1.9">' +
+    '<li>시각적 반응지연 특성은 CVI 3단계 전반에서 계속 남아있기는 하지만 일반적으로 시각적 반응지연 시간이 감소한다.</li>' +
+    '<li>CVI 3단계 아동에게 시각적 호기심이 관찰될 수 있다.</li>' +
+    '<li>특정 시야선호 특성이 또래와 동일하게 개선되지 않더라도 보다 정상에 가깝게 시야를 사용할 수 있다. 그러나 여전히 하측시야 기능의 결함이 남아 있을 수 있다.</li>' +
+    '<li>시각적으로 안내된 신체 도달의 어려움 특성이 여전히 남아있을 수 있다.</li>' +
+    '<li>복잡한 이미지 또는 보완대체의사소통 기기의 그림 상징처럼 2차원 자료가 복잡하다면 시각적 어려움을 계속 보일 수 있다.</li>' +
+    '<li>아동은 3m~4m 50cm 이상 떨어져 있는 물체를 인식하는 것이 가능할 수 있다. 다만 매우 복잡하거나 새로운 환경이 아동의 시각적 수행을 계속 방해할 수 있다.</li>' +
+    '</ul>' +
+    '</div>'
+};
+
+document.getElementById('btn-pdf').addEventListener('click',function(){
+  document.getElementById('pw-input').value='';
+  document.getElementById('mo-pw').classList.add('show');
+  setTimeout(function(){ document.getElementById('pw-input').focus(); }, 100);
+});
+
+document.getElementById('btn-pw-cancel').addEventListener('click',function(){
+  document.getElementById('mo-pw').classList.remove('show');
+});
+
+document.getElementById('btn-pw-ok').addEventListener('click',function(){
+  var pw = document.getElementById('pw-input').value;
+  if(pw !== '3012'){ toast('비밀번호가 틀렸습니다'); document.getElementById('pw-input').value=''; return; }
+  document.getElementById('mo-pw').classList.remove('show');
+  generatePDF(true);
+});
+
+document.getElementById('pw-input').addEventListener('keydown',function(e){
+  if(e.key==='Enter'){ document.getElementById('btn-pw-ok').click(); }
+});
+
+document.getElementById('btn-pdf-basic').addEventListener('click',function(){
+  var el = document.getElementById('sc-result');
+  var btn = document.getElementById('btn-pdf-basic');
+  btn.textContent = '캡처 중...';
+  btn.disabled = true;
+  // Temporarily hide action buttons
+  var ract = el.querySelector('.ract');
+  if(ract) ract.style.display = 'none';
+  html2canvas(el, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: '#f0f4f8',
+    scrollX: 0,
+    scrollY: -window.scrollY
+  }).then(function(canvas){
+    if(ract) ract.style.display = '';
+    btn.textContent = '📸 캡처 저장';
+    btn.disabled = false;
+    var link = document.createElement('a');
+    var name = (S.name || '결과') + '_CVI평가_' + (S.date || '') + '.png';
+    link.download = name;
+    link.href = canvas.toDataURL('image/png');
+    // iOS share
+    if(navigator.share && /iPhone|iPad/.test(navigator.userAgent)){
+      canvas.toBlob(function(blob){
+        var file = new File([blob], name, {type:'image/png'});
+        navigator.share({files:[file], title:'CVI 평가결과'}).catch(function(){
+          link.click();
+        });
+      });
+    } else {
+      link.click();
+    }
+  }).catch(function(){
+    if(ract) ract.style.display = '';
+    btn.textContent = '📸 캡처 저장';
+    btn.disabled = false;
+    toast('캡처에 실패했습니다');
+  });
+});
+
+function generatePDF(includeGuide){
+  var lastQ=S.stopped||QS.length;
+  var ds=new Date(S.date).toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
+
+  // Find display level
+  var dLv=null;
+  for(var dli=0;dli<LEVELS.length;dli++){
+    var dp=LEVELS[dli].lv.split('~');
+    if(LEVELS[dli].lv===S.finalLv||dp[0]===S.finalLv||dp[1]===S.finalLv){dLv=LEVELS[dli];break;}
+  }
+  if(!dLv) dLv=LEVELS[0];
+
+  // Calculate phase
+  var sc2val=calcSc2Total();
+  var sc1num=parseFloat(S.finalLv)||0;
+  function gp(v){return v<=3?1:v<=7?2:3;}
+  var pm=Math.min(gp(sc1num),gp(sc2val)), px=Math.max(gp(sc1num),gp(sc2val));
+  var phaseLabel=pm===px?'Phase '+pm:'Phase '+pm+'~'+px;
+  var phaseKey=phaseLabel.replace('Phase ','');
+  var phaseColors={'1':'#e05a7a','2':'#e8a838','3':'#3db8a0','1~2':'#e8a838','2~3':'#3db8a0','1~3':'#7c5cbf'};
+  var phaseGrads={'1':'linear-gradient(135deg,#e05a7a,#f07090)','2':'linear-gradient(135deg,#e8a838,#f0b830)','3':'linear-gradient(135deg,#3db8a0,#2d9e8a)','1~2':'linear-gradient(135deg,#e05a7a,#e8a838)','2~3':'linear-gradient(135deg,#e8a838,#3db8a0)','1~3':'linear-gradient(135deg,#e05a7a,#e8a838,#3db8a0)'};
+  var phaseColor=phaseColors[phaseKey]||'#1a4a6b';
+  var phaseGrad=phaseGrads[phaseKey]||'linear-gradient(135deg,#1a4a6b,#2d8ecf)';
+
+  // Build chart SVG
+  function pct(v){return Math.min(Math.max(v/10*100,0),100);}
+  var phases=[
+    {label:'Phase 1',from:0,to:3,bg:'#fde8ef',tc:'#e05a7a'},
+    {label:'Phase 2',from:3,to:7,bg:'#fef9ec',tc:'#b07d1a'},
+    {label:'Phase 3',from:7,to:10,bg:'#edf7f5',tc:'#27856f'},
+  ];
+  var segsHtml=phases.map(function(p){
+    var w=(p.to-p.from)/10*100;
+    var left=p.from/10*100;
+    return '<div style="position:absolute;left:'+left+'%;width:'+w+'%;height:100%;background:'+p.bg+';display:flex;align-items:center;justify-content:center">'
+      +'<span style="font-size:10px;font-weight:800;color:'+p.tc+'">'+p.label+'</span></div>';
+  }).join('');
+  var x1=pct(sc1num), x2=pct(sc2val);
+  var ticksHtml=[0,1,2,3,4,5,6,7,8,9,10].map(function(t){
+    return '<div style="position:absolute;left:'+pct(t)+'%;transform:translateX(-50%);font-size:9px;color:#94a3b8">'+t+'</div>';
+  }).join('');
+
+  // Build table rows
+  var rows='';
+  LEVELS.forEach(function(lv){
+    if(lv.range[0]>lastQ) return;
+    rows+='<tr><td colspan="4" style="background:'+lv.color+';color:#fff;font-weight:700;font-size:12px;padding:7px 12px">'
+      +'<div style="display:flex;align-items:center;justify-content:space-between">'
+      +'<span>평가척도 1 - '+lv.label+' : '+lv.desc+'</span>'
+      +'<span style="background:rgba(255,255,255,.25);padding:2px 10px;border-radius:20px;font-size:11px;white-space:nowrap;flex-shrink:0">Lv.'+S.finalLv+'</span>'
+      +'</div></td></tr>';
+    var e2=Math.min(lv.range[1],lastQ);
+    for(var n=lv.range[0];n<=e2;n++){
+      var a=S.ans[n-1];
+      var ri=RATS.find(function(r){return r.key===a.rat;})||{};
+      var oidS=a.oid.length?a.oid.join(', '):'-';
+      var bg=n%2===0?'#f8fafc':'#fff';
+      rows+='<tr style="background:'+bg+'">'
+        +'<td style="width:28px;text-align:center;font-size:11px;color:#999;padding:6px 4px;border-bottom:1px solid #edf2f7;vertical-align:top">'+n+'</td>'
+        +'<td style="padding:6px 10px;font-size:12px;line-height:1.6;border-bottom:1px solid #edf2f7;vertical-align:top">'+QS[n-1]+(a.comment?'<div style="font-size:11px;color:#475569;background:#f1f5f9;border-radius:4px;padding:3px 7px;margin-top:3px">'+a.comment+'</div>':'')+'</td>'
+        +'<td style="width:40px;text-align:center;font-size:11px;color:#888;padding:6px 4px;border-bottom:1px solid #edf2f7;vertical-align:top;white-space:nowrap">'+oidS+'</td>'
+        +'<td style="width:36px;text-align:center;padding:6px 4px;border-bottom:1px solid #edf2f7;vertical-align:top"><span style="background:'+(ri.bg||'#f3f4f6')+';color:'+(ri.color||'#555')+';border-radius:5px;padding:2px 7px;font-size:11px;font-weight:700">'+(a.rat||'-')+'</span></td>'
+        +'</tr>';
+    }
+  });
+
+  var css=[
+    '@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap");',
+    '*{box-sizing:border-box;margin:0;padding:0}',
+    'body{font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:#f0f4f8;color:#1a2332}',
+    '.page{max-width:700px;margin:0 auto;background:#fff;min-height:100vh}',
+    '.hdr{background:#1a4a6b;padding:20px 24px 16px}',
+    '.hdr-top{display:flex;align-items:center;gap:14px;margin-bottom:10px}',
+    '.hdr-badge{background:rgba(255,255,255,.15);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:#fff;flex-shrink:0}',
+    '.hdr-title{font-size:20px;font-weight:800;color:#fff}',
+    '.hdr-sub{font-size:11px;color:rgba(255,255,255,.65);margin-top:1px}',
+    '.hdr-info{font-size:11px;color:rgba(255,255,255,.7);margin-top:8px}',
+    '.body{padding:16px}',
+    'table{width:100%;border-collapse:collapse}',
+    '.footer{text-align:center;font-size:10px;color:#b0bec5;padding:16px;border-top:1px solid #edf2f7}',
+    '.bar-btns{position:fixed;bottom:0;left:0;right:0;padding:12px 16px;background:#fff;border-top:1px solid #e2e8f0;display:flex;flex-direction:column;gap:8px;z-index:999}',
+    '.b1{padding:13px 16px;border:1.5px solid #e2e8f0;border-radius:10px;background:#fff;color:#64748b;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap}',
+    '.b2{flex:1;padding:13px;border:none;border-radius:10px;background:#3db8a0;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}',
+    '.b3{width:100%;padding:11px;border:none;background:#3db8a0;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:6px;border-radius:10px}',
+    '@media print{.bar-btns{display:none!important}body{background:#fff}.page{max-width:100%}}'
+  ].join('');
+
+  // SC2 table
+  var sc2rows='';
+  SC2_ITEMS.forEach(function(item,i){
+    var v=S.sc2ans[i];
+    var si=SC2_SCORES.indexOf(v);
+    var color=si>=0?SC2_COLORS[si]:'#94a3b8';
+    var label=v!==null?SC2_LABELS[si]:'-';
+    var bg=i%2===0?'#f8fafc':'#fff';
+    sc2rows+='<tr style="background:'+bg+'">'
+      +'<td style="width:26px;text-align:center;font-size:11px;color:#999;padding:6px 4px;border-bottom:1px solid #edf2f7">'+(i+1)+'</td>'
+      +'<td style="padding:6px 10px;font-size:12px;border-bottom:1px solid #edf2f7">'+item+'</td>'
+      +'<td style="text-align:center;padding:6px 8px;border-bottom:1px solid #edf2f7"><span style="background:'+color+'22;color:'+color+';border-radius:5px;padding:2px 8px;font-size:12px;font-weight:800">'+label+'</span></td>'
+      +'</tr>';
+  });
+  var sc2total=calcSc2Total();
+  var sc2table='<div style="margin-top:14px;border-radius:0 0 8px 8px;overflow:hidden">'
+    +'<div style="background:#7c5cbf;color:#fff;font-weight:700;font-size:12px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center">'
+    +'<span>평가척도 2 — CVI 고유 특성 영향 평가</span>'
+    +'<span style="background:rgba(255,255,255,.25);padding:2px 10px;border-radius:20px;font-size:11px">총점: '+sc2total+'점 / 10점</span>'
+    +'</div>'
+    +'<table style="width:100%;border-collapse:collapse">'+sc2rows+'</table>'
+    +'</div>';
+
+  var body=[
+    '<div class="page">',
+
+    // Header
+    '<div class="hdr">',
+    '<div class="hdr-top"><div class="hdr-badge">CVI</div>',
+    '<div><div class="hdr-title">Range Assessment</div>',
+    '<div class="hdr-sub">Cortical Visual Impairment — Scale 1 &amp; 2</div></div></div>',
+    '<div class="hdr-info">아동: '+S.name+' &nbsp;|&nbsp; 평가일: '+ds+' &nbsp;|&nbsp; 평가자: '+S.ev+'</div>',
+    '</div>',
+
+    // Phase bar
+    '<div style="background:'+phaseGrad+';padding:10px 20px;display:flex;align-items:center;justify-content:space-between">',
+    '<div style="font-size:12px;font-weight:700;color:#fff">FINAL PHASE</div>',
+    '<div style="background:rgba(255,255,255,.25);color:#fff;font-size:13px;font-weight:800;padding:4px 14px;border-radius:20px">'+phaseLabel+'</div>',
+    '</div>',
+
+    '<div class="body">',
+
+    // Info cards row
+    '<div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">',
+    '<div style="flex:1;min-width:120px;background:#f8fafc;border-radius:10px;padding:12px 14px;border:1px solid #e2e8f0">',
+    '<div style="font-size:10px;font-weight:700;color:#94a3b8;letter-spacing:1px;margin-bottom:4px">평가척도 1</div>',
+    '<div style="font-size:20px;font-weight:800;color:'+dLv.color+'">Lv.'+S.finalLv+'</div>',
+    '<div style="font-size:11px;color:'+dLv.color+';margin-top:2px">'+dLv.label+'</div>',
+    '</div>',
+    '<div style="flex:1;min-width:120px;background:#f8fafc;border-radius:10px;padding:12px 14px;border:1px solid #e2e8f0">',
+    '<div style="font-size:10px;font-weight:700;color:#94a3b8;letter-spacing:1px;margin-bottom:4px">평가척도 2</div>',
+    '<div style="font-size:20px;font-weight:800;color:#7c5cbf">'+sc2val+'점</div>',
+    '<div style="font-size:11px;color:#7c5cbf;margin-top:2px">/ 10점</div>',
+    '</div>',
+    '<div style="flex:1;min-width:120px;background:'+phaseColor+'22;border-radius:10px;padding:12px 14px;border:2px solid '+phaseColor+'">',
+    '<div style="font-size:10px;font-weight:700;color:'+phaseColor+';letter-spacing:1px;margin-bottom:4px">최종 CVI Phase</div>',
+    '<div style="font-size:20px;font-weight:800;color:'+phaseColor+'">'+phaseLabel+'</div>',
+    '</div>',
+    '</div>',
+
+    // Distribution chart
+    '<div style="background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:14px;border:1px solid #e2e8f0">',
+    '<div style="font-size:11px;font-weight:800;color:#1a2332;margin-bottom:10px;display:flex;align-items:center;gap:6px">',
+    '<div style="width:8px;height:8px;border-radius:50%;background:#6366f1"></div>전반적인 기능적 시각 수준 평가</div>',
+
+    // Bar (phase labels visible, no markers on bar)
+    '<div style="position:relative;height:36px;border-radius:8px;overflow:hidden;border:1px solid #e2e8f0;margin-bottom:6px">',
+    '<div style="position:absolute;inset:0;display:flex;">'+segsHtml+'</div>',
+    '</div>',
+
+    // Marker + tick row below bar (matches result screen layout)
+    '<div style="position:relative;height:44px;margin-bottom:8px">',
+    // Connecting line between markers
+    '<div style="position:absolute;top:14px;left:'+Math.min(x1,x2)+'%;width:'+Math.abs(x2-x1)+'%;height:2px;background:linear-gradient(90deg,#1a4a6b,#e05a7a);border-radius:2px;z-index:5"></div>',
+    // Marker 1 (척도1 - blue)
+    '<div style="position:absolute;left:'+x1+'%;top:7px;transform:translateX(-50%);z-index:10">',
+    '<div style="width:14px;height:14px;border-radius:50%;background:#1a4a6b;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);margin:0 auto"></div>',
+    '<div style="background:#1a4a6b;color:#fff;font-size:8px;font-weight:800;padding:1px 5px;border-radius:4px;white-space:nowrap;margin-top:2px;text-align:center">척도1(범위) Lv.'+S.finalLv+'</div>',
+    '</div>',
+    // Marker 2 (척도2 - pink)
+    '<div style="position:absolute;left:'+x2+'%;top:7px;transform:translateX(-50%);z-index:10">',
+    '<div style="width:14px;height:14px;border-radius:50%;background:#e05a7a;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);margin:0 auto"></div>',
+    '<div style="background:#e05a7a;color:#fff;font-size:8px;font-weight:800;padding:1px 5px;border-radius:4px;white-space:nowrap;margin-top:2px;text-align:center">척도2(수준) '+sc2val+'점</div>',
+    '</div>',
+    '</div>',
+
+    // Ticks
+    '<div style="position:relative;height:16px;margin-bottom:8px">'+ticksHtml+'</div>',
+
+    // Legend
+    '<div style="display:flex;gap:14px;flex-wrap:wrap">',
+    '<div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#64748b"><div style="width:8px;height:8px;border-radius:50%;background:#1a4a6b"></div>척도1(범위) Lv.'+S.finalLv+'</div>',
+    '<div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#64748b"><div style="width:8px;height:8px;border-radius:50%;background:#e05a7a"></div>척도2(수준) '+sc2val+'점</div>',
+    '</div>',
+    '</div>',
+
+    // Table
+    '<table>'+rows+'</table>',
+    sc2table,
+    includeGuide ? (function(){
+      var guideHtml='<div style="background:#fff;border-radius:12px;padding:16px;margin-top:14px;border:1px solid #e2e8f0">';
+      guideHtml+='<div style="font-size:12px;font-weight:800;color:#1a2332;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid #e2e8f0">📋 단계별 중재 가이드 ('+phaseLabel+')</div>';
+      var phases=phaseKey.split('~');
+      phases.forEach(function(p){ if(PHASE_GUIDE[p]) guideHtml+=PHASE_GUIDE[p]; });
+      guideHtml+='</div>';
+      return guideHtml;
+    }()) : '',
+    '<div class="footer">CVI Range Assessment | '+new Date().toLocaleDateString('ko-KR')+'</div>',
+    '</div>',
+
+    // Buttons
+    '<div class="bar-btns">',
+    '<div style="display:flex;gap:8px">',
+    '<button class="b1" id="close-btn">← 뒤로</button>',
+    '<button class="b2" id="share-btn">공유하기</button>',
+    '<button class="b2" id="print-btn" style="background:#1a4a6b">PDF 저장</button>',
+    '</div>',
+    '</div>',
+    '</div>'
+  ].join('');
+
+  // Open result in new window using document.write (works on iOS Safari)
+  var fullHtml = '<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>'+css+'</style></head><body>'+body+'</body></html>';
+
+  var newWin = window.open('', '_blank');
+  if(newWin){
+    newWin.document.open();
+    newWin.document.write(fullHtml);
+    newWin.document.close();
+  } else {
+    // Popup blocked - show inline iframe instead
+    var old=document.getElementById('print-iframe');
+    if(old) document.body.removeChild(old);
+    var iframe=document.createElement('iframe');
+    iframe.id='print-iframe';
+    iframe.style.cssText='position:fixed;inset:0;width:100%;height:100%;border:none;z-index:9998;background:#fff';
+    document.body.appendChild(iframe);
+    iframe.contentDocument.open();
+    iframe.contentDocument.write(fullHtml);
+    iframe.contentDocument.close();
+    // Add bottom bar
+    var bar=iframe.contentDocument.createElement('div');
+    bar.style.cssText='position:fixed;bottom:0;left:0;right:0;padding:12px 16px;background:#fff;border-top:1px solid #e2e8f0;display:flex;gap:8px;z-index:9999';
+    var backBtn=iframe.contentDocument.createElement('button');
+    backBtn.textContent='← 뒤로';
+    backBtn.style.cssText='padding:13px 16px;border:1.5px solid #e2e8f0;border-radius:10px;background:#fff;color:#64748b;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap';
+    backBtn.onclick=function(){
+      var f=document.getElementById('print-iframe');
+      if(f) document.body.removeChild(f);
+      showScreen('sc-result');
+    };
+    var captureBtn=iframe.contentDocument.createElement('button');
+    captureBtn.textContent='저장';
+    captureBtn.style.cssText='flex:1;padding:13px;border:none;border-radius:10px;background:#1a4a6b;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit';
+    captureBtn.onclick=function(){
+      captureBtn.textContent='저장 중...';
+      captureBtn.disabled=true;
+      // Hide bar during capture
+      bar.style.display='none';
+      html2canvas(iframe.contentDocument.body,{scale:2,useCORS:true,backgroundColor:'#fff',windowWidth:iframe.contentDocument.body.scrollWidth,windowHeight:iframe.contentDocument.body.scrollHeight}).then(function(canvas){
+        bar.style.display='flex';
+        captureBtn.textContent='저장';
+        captureBtn.disabled=false;
+        var name=(S.name||'결과')+'_CVI평가_개발자_'+(S.date||'')+'.png';
+        if(navigator.share && /iPhone|iPad/.test(navigator.userAgent)){
+          canvas.toBlob(function(blob){
+            var file=new File([blob],name,{type:'image/png'});
+            navigator.share({files:[file],title:'CVI 평가결과(개발자)'}).catch(function(){
+              var a=document.createElement('a');a.download=name;a.href=canvas.toDataURL('image/png');a.click();
+            });
+          });
+        } else {
+          var a=document.createElement('a');a.download=name;a.href=canvas.toDataURL('image/png');a.click();
+        }
+      }).catch(function(){ bar.style.display='flex'; captureBtn.textContent='저장'; captureBtn.disabled=false; });
+    };
+    bar.appendChild(backBtn); bar.appendChild(captureBtn);
+    iframe.contentDocument.body.appendChild(bar);
+  }
+
+}
+
+// ── SHARE ─────────────────────────────────────────────────────────
+document.getElementById('btn-sh').addEventListener('click',function(){
+  var ds=new Date(S.date).toLocaleDateString('ko-KR');
+  var lastQ=S.stopped||QS.length;
+
+  // Find display level
+  var dLv=null;
+  for(var dli=0;dli<LEVELS.length;dli++){
+    var dp=LEVELS[dli].lv.split('~');
+    if(LEVELS[dli].lv===S.finalLv||dp[0]===S.finalLv||dp[1]===S.finalLv){dLv=LEVELS[dli];break;}
+  }
+  if(!dLv) dLv=LEVELS[0];
+
+  var lines=[
+    'CVI Range 평가 결과',
+    '========================',
+    '아동: '+S.name,
+    '평가일: '+ds,
+    '평가자: '+S.ev,
+    '========================',
+    '최종 CVI Phase: Range '+S.finalLv+' ('+dLv.label+')',
+    dLv.desc,
+    (S.stopped?'※ '+S.stopped+'번 문항에서 평가 종료':''),
+    '========================'
+  ];
+
+  LEVELS.forEach(function(lv){
+    if(lv.range[0]>lastQ) return;
+    lines.push('');
+    lines.push('['+lv.label+']');
+    var e=Math.min(lv.range[1],lastQ);
+    for(var n=lv.range[0];n<=e;n++){
+      var a=S.ans[n-1];
+      var oid=a.oid.length?a.oid.join(','):'-';
+      var qt=QS[n-1].length>30?QS[n-1].substring(0,30)+'...':QS[n-1];
+      lines.push(n+'. ['+oid+']['+(a.rat||'-')+'] '+qt);
+      if(a.comment) lines.push('   → '+a.comment);
+    }
+  });
+
+  var text=lines.filter(function(l){return l!==null&&l!==undefined;}).join('\n');
+  var title='CVI Range 평가결과 - '+S.name;
+
+  // Native share sheet (iOS/Android)
+  if(navigator.share){
+    navigator.share({title:title, text:text})
+      .then(function(){ toast('공유 완료 ✓'); })
+      .catch(function(e){ if(e.name!=='AbortError') cpTxt(text); });
+  } else {
+    cpTxt(text);
+  }
+});
+
+
+// ── COPY TEXT
+function cpTxt(txt){
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(txt).then(function(){toast('클립보드에 복사됐습니다 ✓');});
+  } else {
+    var ta=document.createElement('textarea');
+    ta.value=txt;ta.style.position='fixed';ta.style.top='-9999px';
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');
+    document.body.removeChild(ta);toast('클립보드에 복사됐습니다 ✓');
+  }
+}
+
+// ── RESTART ───────────────────────────────────────────────────────
+document.getElementById('btn-rs').addEventListener('click',function(){
+  S.name=''; S.ev=''; S.finalLv=null; S.stopped=null;
+  S.cur=0; S.ans=newAns(); S.sc2ans=Array(10).fill(null);
+  EV_IDS.forEach(function(id){document.getElementById(id).className='ev-b';});
+  document.getElementById('inp-child').value='';
+  document.getElementById('inp-date').value=new Date().toISOString().split('T')[0];
+  showScreen('sc-cover');
+});
+
+document.getElementById('btn-back').addEventListener('click',function(){
+  showScreen('sc-scale2');
+});
+
+})();
+</script>
+</body>
+</html>
