@@ -197,13 +197,13 @@ input[type="date"].fi::-webkit-calendar-picker-indicator{filter:invert(1);opacit
 <!-- COVER -->
 <div id="sc-cover" class="screen active">
   <div class="ci">
-    <div class="badge">피질 시각 장애 평가</div>
+    <div class="badge">대뇌피질 시각장애</div>
     <div class="cover-t">CVI Range</div>
     <div class="cover-sub" style="letter-spacing:5px;font-size:12px;font-weight:600;color:rgba(255,255,255,.7)">Assessment</div>
     <div class="cover-rule"></div>
     <div style="border-top:1px solid rgba(255,255,255,.15);padding-top:16px;margin-bottom:20px;">
-      <p style="font-size:11px;color:rgba(255,255,255,.45);line-height:1.8;letter-spacing:.3px;">이 평가도구는 Christine Roman Rantzy의<br><em style="color:rgba(232,168,56,.7);font-style:normal;font-weight:600;">CVI Range</em>를 App으로 만든 것입니다.</p>
-      <p style="font-size:11px;color:rgba(255,255,255,.65);margin-top:8px;letter-spacing:.8px;font-weight:600;">— OT 하재용 —</p>
+      <p style="font-size:11px;color:rgba(255,255,255,.45);line-height:1.8;letter-spacing:.3px;">이 평가도구는 Christine Roman-Lantzy의<br><em style="color:rgba(232,168,56,.7);font-style:normal;font-weight:600;">CVI Range</em>를 App으로 만든 것입니다.</p>
+      <p style="font-size:11px;color:rgba(255,255,255,.65);margin-top:8px;letter-spacing:.8px;font-weight:600;">— Created by OT 하재용 —</p>
     </div>
     <div class="fg">
       <label class="fl">아동 이름</label>
@@ -216,9 +216,9 @@ input[type="date"].fi::-webkit-calendar-picker-indicator{filter:invert(1);opacit
     <div class="fg">
       <label class="fl">평가자</label>
       <div class="ev-g">
-        <div class="ev-b" id="ev0">👨‍👩‍👧 부모님</div>
-        <div class="ev-b" id="ev1">🩺 의사</div>
-        <div class="ev-b" id="ev2">🧑‍⚕️ 치료사</div>
+        <div class="ev-b" id="ev0">부모님</div>
+        <div class="ev-b" id="ev1">의사</div>
+        <div class="ev-b" id="ev2">치료사</div>
       </div>
     </div>
     <button class="btn-s" id="btn-start">평가 시작하기 →</button>
@@ -1080,8 +1080,10 @@ function showScale2(){
 }
 
 document.getElementById('btn-sc2-back').addEventListener('click',function(){
+  var lastIdx = S.stopped ? S.stopped - 1 : QS.length - 1;
+  S.cur = lastIdx;
+  renderQ();
   showScreen('sc-q');
-  document.getElementById('mo-lv-result').classList.add('show');
 });
 
 document.getElementById('btn-sc2-done').addEventListener('click',function(){
