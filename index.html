@@ -203,7 +203,7 @@ input[type="date"].fi::-webkit-calendar-picker-indicator{filter:invert(1);opacit
     <div class="cover-rule"></div>
     <div style="border-top:1px solid rgba(255,255,255,.15);padding-top:16px;margin-bottom:20px;">
       <p style="font-size:11px;color:rgba(255,255,255,.45);line-height:1.8;letter-spacing:.3px;">이 평가도구는 Christine Roman Rantzy의<br><em style="color:rgba(232,168,56,.7);font-style:normal;font-weight:600;">CVI Range</em>를 App으로 만든 것입니다.</p>
-      <p style="font-size:11px;color:rgba(255,255,255,.65);margin-top:8px;letter-spacing:.8px;font-weight:600;">— 국립재활원 소아재활연구회 —</p>
+      <p style="font-size:11px;color:rgba(255,255,255,.65);margin-top:8px;letter-spacing:.8px;font-weight:600;">— OT 하재용 —</p>
     </div>
     <div class="fg">
       <label class="fl">아동 이름</label>
@@ -253,8 +253,7 @@ input[type="date"].fi::-webkit-calendar-picker-indicator{filter:invert(1);opacit
     <div id="r-list"></div>
     <div id="r-sc2" style="margin-top:14px"></div></div>
   <div class="ract">
-    <button class="btn-pdf" id="btn-pdf-basic" style="width:100%">저장</button>
-    <button class="btn-sh" id="btn-sh">이메일 · 공유하기</button>
+    <button class="btn-pdf" id="btn-pdf-basic" style="width:100%">공유하기</button>
     <div style="position:relative">
       <button id="btn-back" style="position:absolute;left:0;top:0;bottom:0;width:48px;border-radius:12px 0 0 12px;border:none;background:rgba(0,0,0,.08);color:var(--muted);font-size:15px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif">←</button>
       <button class="btn-rs" id="btn-rs" style="width:100%;text-align:center;padding-left:48px;padding-right:48px">처음으로 돌아가기</button>
@@ -316,7 +315,7 @@ input[type="date"].fi::-webkit-calendar-picker-indicator{filter:invert(1);opacit
 <div class="mo" id="mo-pw">
   <div class="mb" style="text-align:center">
     <div class="mi">🔒</div>
-    <div class="mt">개발자 전용</div>
+    <div class="mt">평가자 전용</div>
     <div class="md">비밀번호를 입력하세요</div>
     <input type="password" id="pw-input" style="width:100%;padding:13px 16px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:18px;text-align:center;outline:none;letter-spacing:4px;font-family:inherit;margin-bottom:14px" placeholder="••••">
     <div class="mbtns">
@@ -1223,7 +1222,7 @@ function showResult(){
     sec.className='rs';
     sec.innerHTML='<div class="rsh" style="justify-content:space-between"><div style="display:flex;align-items:center;gap:8px"><div class="rsd" style="background:'+lv.color+'"></div>'+
       '<span>평가척도 1 - '+lv.label+' <span style="font-weight:700;color:var(--muted)">: '+lv.desc+'</span></span></div>'+
-      '<span style="background:'+lv.color+';color:#fff;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0">Lv.'+S.finalLv+'</span></div>';
+      '<span style="background:'+lv.color+';color:#fff;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0">Lv.'+S.finalLv+' / Lv.10</span></div>';
     var end=Math.min(lv.range[1],lastQ);
     for(var n=lv.range[0];n<=end;n++){
       var a=S.ans[n-1];
@@ -1456,7 +1455,7 @@ function generatePDF(includeGuide){
     rows+='<tr><td colspan="4" style="background:'+lv.color+';color:#fff;font-weight:700;font-size:12px;padding:7px 12px">'
       +'<div style="display:flex;align-items:center;justify-content:space-between">'
       +'<span>평가척도 1 - '+lv.label+' : '+lv.desc+'</span>'
-      +'<span style="background:rgba(255,255,255,.25);padding:2px 10px;border-radius:20px;font-size:11px;white-space:nowrap;flex-shrink:0">Lv.'+S.finalLv+'</span>'
+      +'<span style="background:rgba(255,255,255,.25);padding:2px 10px;border-radius:20px;font-size:11px;white-space:nowrap;flex-shrink:0">Lv.'+S.finalLv+' / Lv.10</span>'
       +'</div></td></tr>';
     var e2=Math.min(lv.range[1],lastQ);
     for(var n=lv.range[0];n<=e2;n++){
@@ -1477,13 +1476,13 @@ function generatePDF(includeGuide){
     '@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap");',
     '*{box-sizing:border-box;margin:0;padding:0}',
     'body{font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:#f0f4f8;color:#1a2332}',
-    '.page{max-width:700px;margin:0 auto;background:#fff;min-height:100vh}',
-    '.hdr{background:#1a4a6b;padding:20px 24px 16px}',
-    '.hdr-top{display:flex;align-items:center;gap:14px;margin-bottom:10px}',
-    '.hdr-badge{background:rgba(255,255,255,.15);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:#fff;flex-shrink:0}',
-    '.hdr-title{font-size:20px;font-weight:800;color:#fff}',
-    '.hdr-sub{font-size:11px;color:rgba(255,255,255,.65);margin-top:1px}',
-    '.hdr-info{font-size:11px;color:rgba(255,255,255,.7);margin-top:8px}',
+    '.page{max-width:100%;width:100%;background:#fff;min-height:100vh;box-sizing:border-box}',
+    '.hdr{background:#fff;border-bottom:2px solid #e2e8f0;padding:20px 24px 16px;overflow:hidden}',
+    '.hdr-top{display:flex;align-items:center;gap:12px;width:100%}',
+    '.hdr-badge{background:#1a4a6b;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:#fff;flex-shrink:0}',
+    '.hdr-title{font-size:20px;font-weight:800;color:#1a2332}',
+    '.hdr-sub{font-size:11px;color:#64748b;margin-top:1px}',
+    '.hdr-info{font-size:11px;color:#64748b;margin-top:8px}',
     '.body{padding:16px}',
     'table{width:100%;border-collapse:collapse}',
     '.footer{text-align:center;font-size:10px;color:#b0bec5;padding:16px;border-top:1px solid #edf2f7}',
@@ -1522,10 +1521,10 @@ function generatePDF(includeGuide){
 
     // Header
     '<div class="hdr">',
-    '<div class="hdr-top"><div class="hdr-badge">CVI</div>',
-    '<div><div class="hdr-title">Range Assessment</div>',
-    '<div class="hdr-sub">Cortical Visual Impairment — Scale 1 &amp; 2</div></div></div>',
-    '<div class="hdr-info">아동: '+S.name+' &nbsp;|&nbsp; 평가일: '+ds+' &nbsp;|&nbsp; 평가자: '+S.ev+'</div>',
+    '<div class="hdr-top">',
+    '<div class="hdr-badge">CVI</div>',
+    '<div style="flex:1;min-width:0"><div class="hdr-title">Range Assessment</div></div>',
+    '<div style="text-align:right;font-size:11px;color:#475569;white-space:nowrap;flex-shrink:0">아동: '+S.name+'<br>평가일: '+ds+'<br>평가자: '+S.ev+'</div>',
     '</div>',
 
     // Phase bar
@@ -1597,7 +1596,8 @@ function generatePDF(includeGuide){
       var guideHtml='<div style="background:#fff;border-radius:12px;padding:16px;margin-top:14px;border:1px solid #e2e8f0">';
       guideHtml+='<div style="font-size:12px;font-weight:800;color:#1a2332;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid #e2e8f0">📋 단계별 중재 가이드 ('+phaseLabel+')</div>';
       var phases=phaseKey.split('~');
-      phases.forEach(function(p){ if(PHASE_GUIDE[p]) guideHtml+=PHASE_GUIDE[p]; });
+      var ps=parseInt(phases[0]),pe=parseInt(phases[phases.length-1]);
+      for(var pi2=ps;pi2<=pe;pi2++){ if(PHASE_GUIDE[String(pi2)]) guideHtml+=PHASE_GUIDE[String(pi2)]; }
       guideHtml+='</div>';
       return guideHtml;
     }()) : '',
@@ -1607,22 +1607,26 @@ function generatePDF(includeGuide){
     // Buttons
     '<div class="bar-btns">',
     '<div style="display:flex;gap:8px">',
-    '<button class="b1" id="close-btn">← 뒤로</button>',
+
     '</div>',
     '</div>',
     '</div>'
   ].join('');
 
   // Show overlay inside app
-  var ov = document.getElementById('pdf-ov');
-  if(ov) ov.remove();
-  ov = document.createElement('div');
-  ov.id = 'pdf-ov';
-  ov.style.cssText = 'position:fixed;inset:0;z-index:9998;background:#f0f4f8;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:72px';
-  ov.innerHTML = '<style>'+css+'</style>' + body;
+  // Use iframe for CSS isolation
+  var wrap = document.getElementById('pdf-ov');
+  if(wrap) wrap.remove();
+  wrap = document.createElement('div');
+  wrap.id = 'pdf-ov';
+  wrap.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:9998;background:#fff';
+
+  var iframe = document.createElement('iframe');
+  iframe.style.cssText = 'width:100%;height:calc(100% - 64px);border:none;display:block';
+  wrap.appendChild(iframe);
 
   var bar = document.createElement('div');
-  bar.style.cssText = 'position:fixed;bottom:0;left:0;right:0;padding:10px 14px;background:#fff;border-top:1px solid #e2e8f0;display:flex;gap:8px;z-index:9999';
+  bar.style.cssText = 'position:absolute;bottom:0;left:0;right:0;height:64px;padding:10px 14px;background:#fff;border-top:1px solid #e2e8f0;display:flex;gap:8px;align-items:center;box-sizing:border-box';
 
   var backBtn = document.createElement('button');
   backBtn.textContent = '← 뒤로';
@@ -1635,19 +1639,31 @@ function generatePDF(includeGuide){
   var saveBtn = document.createElement('button');
   saveBtn.textContent = '저장';
   saveBtn.style.cssText = 'flex:1;padding:13px;border:none;border-radius:10px;background:#1a4a6b;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit';
+
+  bar.appendChild(backBtn);
+  bar.appendChild(saveBtn);
+  wrap.appendChild(bar);
+  document.body.appendChild(wrap);
+
+  // Write content into iframe
+  var fullHtml = '<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>'+css+'</style></head><body>'+body+'</body></html>';
+  iframe.contentDocument.open();
+  iframe.contentDocument.write(fullHtml);
+  iframe.contentDocument.close();
+
   saveBtn.onclick = function(){
     saveBtn.textContent = '저장 중...';
     saveBtn.disabled = true;
-    bar.style.opacity = '0';
-    html2canvas(ov, {
-      scale: 2, useCORS: true, backgroundColor: '#f0f4f8',
-      scrollX: 0, scrollY: 0,
-      windowWidth: ov.scrollWidth, windowHeight: ov.scrollHeight, height: ov.scrollHeight
+    bar.style.display = 'none';
+    html2canvas(iframe.contentDocument.body, {
+      scale: 2, useCORS: true, backgroundColor: '#fff',
+      windowWidth: iframe.contentDocument.body.scrollWidth,
+      windowHeight: iframe.contentDocument.body.scrollHeight
     }).then(function(canvas){
-      bar.style.opacity = '1';
+      bar.style.display = 'flex';
       saveBtn.textContent = '저장';
       saveBtn.disabled = false;
-      var name = (S.name||'결과')+'_CVI평가_개발자_'+(S.date||'')+'.png';
+      var name = (S.name||'결과')+'_CVI평가_평가자_'+(S.date||'')+'.png';
       if(navigator.share && /iPhone|iPad/.test(navigator.userAgent)){
         canvas.toBlob(function(blob){
           var file = new File([blob],name,{type:'image/png'});
@@ -1658,68 +1674,11 @@ function generatePDF(includeGuide){
       } else {
         var a=document.createElement('a');a.download=name;a.href=canvas.toDataURL();a.click();
       }
-    }).catch(function(){ bar.style.opacity='1'; saveBtn.textContent='저장'; saveBtn.disabled=false; });
+    }).catch(function(){ bar.style.display='flex'; saveBtn.textContent='저장'; saveBtn.disabled=false; });
   };
-
-  bar.appendChild(backBtn);
-  bar.appendChild(saveBtn);
-  ov.appendChild(bar);
-  document.body.appendChild(ov);
 }
 
 // ── SHARE ─────────────────────────────────────────────────────────
-document.getElementById('btn-sh').addEventListener('click',function(){
-  var ds=new Date(S.date).toLocaleDateString('ko-KR');
-  var lastQ=S.stopped||QS.length;
-
-  // Find display level
-  var dLv=null;
-  for(var dli=0;dli<LEVELS.length;dli++){
-    var dp=LEVELS[dli].lv.split('~');
-    if(LEVELS[dli].lv===S.finalLv||dp[0]===S.finalLv||dp[1]===S.finalLv){dLv=LEVELS[dli];break;}
-  }
-  if(!dLv) dLv=LEVELS[0];
-
-  var lines=[
-    'CVI Range 평가 결과',
-    '========================',
-    '아동: '+S.name,
-    '평가일: '+ds,
-    '평가자: '+S.ev,
-    '========================',
-    '최종 CVI Phase: Range '+S.finalLv+' ('+dLv.label+')',
-    dLv.desc,
-    (S.stopped?'※ '+S.stopped+'번 문항에서 평가 종료':''),
-    '========================'
-  ];
-
-  LEVELS.forEach(function(lv){
-    if(lv.range[0]>lastQ) return;
-    lines.push('');
-    lines.push('['+lv.label+']');
-    var e=Math.min(lv.range[1],lastQ);
-    for(var n=lv.range[0];n<=e;n++){
-      var a=S.ans[n-1];
-      var oid=a.oid.length?a.oid.join(','):'-';
-      var qt=QS[n-1].length>30?QS[n-1].substring(0,30)+'...':QS[n-1];
-      lines.push(n+'. ['+oid+']['+(a.rat||'-')+'] '+qt);
-      if(a.comment) lines.push('   → '+a.comment);
-    }
-  });
-
-  var text=lines.filter(function(l){return l!==null&&l!==undefined;}).join('\n');
-  var title='CVI Range 평가결과 - '+S.name;
-
-  // Native share sheet (iOS/Android)
-  if(navigator.share){
-    navigator.share({title:title, text:text})
-      .then(function(){ toast('공유 완료 ✓'); })
-      .catch(function(e){ if(e.name!=='AbortError') cpTxt(text); });
-  } else {
-    cpTxt(text);
-  }
-});
-
 
 // ── COPY TEXT
 function cpTxt(txt){
